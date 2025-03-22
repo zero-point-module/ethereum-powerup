@@ -1,19 +1,19 @@
 "use client"
 
 import { useState, useCallback, memo } from "react"
-import type { ListDisplayProps } from "@/types"
-import { useInstalledModules } from "@/contexts/installed-modules-context"
+import type { ListDisplayProps, Module } from "@/types"
+import { useWeb3 } from "@/hooks/use-web3"
 
 // Create the component function
 function ListDisplayComponent({ items, state, selectedItem, onSelectItem }: ListDisplayProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [showOnlyInstalled, setShowOnlyInstalled] = useState(false)
-  const { isModuleInstalled } = useInstalledModules()
+  const { installedModules } = useWeb3()
 
   // Filter items based on search query and installation status
   const filteredItems = items.filter((item) => {
-    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesInstalled = !showOnlyInstalled || isModuleInstalled(item.id)
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesInstalled = !showOnlyInstalled || installedModules.includes(item)
     return matchesSearch && matchesInstalled
   })
 
@@ -104,7 +104,7 @@ function ListDisplayComponent({ items, state, selectedItem, onSelectItem }: List
                 item={item}
                 state={state}
                 isSelected={selectedItem?.id === item.id}
-                isInstalled={isModuleInstalled(item.id)}
+                isInstalled={installedModules.includes(item)}
                 onSelect={() => state === "active" && onSelectItem(item)}
               />
             ))}
@@ -132,7 +132,7 @@ function ListDisplayComponent({ items, state, selectedItem, onSelectItem }: List
 
 // Memoized list item component to prevent unnecessary re-renders
 interface ListItemProps {
-  item: { id: number; title: string }
+  item: Module
   state: "off" | "on" | "active"
   isSelected: boolean
   isInstalled: boolean
@@ -164,7 +164,7 @@ const ListItem = memo(function ListItem({ item, state, isSelected, isInstalled, 
       )}
 
       <span className={`text-[#00ff00] font-mono text-sm truncate max-w-[85%] ${isSelected ? "animate-pulse" : ""}`}>
-        {isSelected ? ">" : ""} {item.title}
+        {isSelected ? ">" : ""} {item.name}
       </span>
 
       {/* Status indicator - visual only, no text */}

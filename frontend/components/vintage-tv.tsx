@@ -6,23 +6,25 @@ import { CircularDisplay } from "./circular-display"
 import { ListDisplay } from "./list-display"
 import { DetailScreen } from "./detail-screen"
 import { ActionButton } from "./action-button"
-import { useInstalledModules } from "@/contexts/installed-modules-context"
 import { useTVState } from "@/hooks/use-tv-state"
-import { DEFAULT_ITEMS } from "@/constants"
+import { AVAILABLE_MODULES } from "@/constants/modules"
+import { useWeb3 } from "@/hooks/use-web3"
+import { useModules, useUpgradeEOA } from "@/hooks/eoa"
 
 export default function VintageTV() {
-  const { state, selectedItem, turnOn, activate, togglePower, selectItem } = useTVState()
-
-  const { isModuleInstalled, installModule } = useInstalledModules()
+  const { state, selectedItem, turnOn, togglePower, selectItem } = useTVState()
+  const { installedModules } = useWeb3()
+  const { install: { mutate: installModule } } = useModules()
+  const { mutate: activateSmartWallet } = useUpgradeEOA()
 
   // Handle install action
   const handleInstall = () => {
-    if (selectedItem && !isModuleInstalled(selectedItem.id)) {
+    if (selectedItem && !installedModules.includes(selectedItem.id)) {
       installModule(selectedItem.id)
     }
   }
 
-  const handleInstallMemo = useMemo(() => handleInstall, [selectedItem, isModuleInstalled, installModule])
+  const handleInstallMemo = useMemo(() => handleInstall, [selectedItem, installedModules, installModule])
 
   // Determine which button to show based on state
   const buttonProps = useMemo(() => {
@@ -32,21 +34,21 @@ export default function VintageTV() {
       case "on":
         return {
           label: "POWER UP ↑",
-          onClick: activate,
+          onClick: activateSmartWallet,
           className: "power-up-glow",
         }
       case "active":
         return {
           label: selectedItem
-            ? isModuleInstalled(selectedItem.id)
+            ? installedModules.includes(selectedItem.id)
               ? "ALREADY INSTALLED"
               : "INSTALL MODULE"
             : "SELECT A MODULE",
           onClick: handleInstallMemo,
-          disabled: !selectedItem || (selectedItem && isModuleInstalled(selectedItem.id)),
+          disabled: !selectedItem || (selectedItem && installedModules.includes(selectedItem.id)),
         }
     }
-  }, [state, selectedItem, turnOn, activate, handleInstallMemo, isModuleInstalled])
+  }, [state, selectedItem, turnOn, activateSmartWallet, handleInstallMemo, installedModules])
 
   return (
     <div className="w-[900px] h-[600px] relative">
@@ -56,7 +58,7 @@ export default function VintageTV() {
           <div className="w-1/3 p-4 flex flex-col items-center justify-between">
             <CircularDisplay state={state} />
             <div className="my-4 w-full h-64">
-              <ListDisplay items={DEFAULT_ITEMS} state={state} selectedItem={selectedItem} onSelectItem={selectItem} />
+              <ListDisplay items={AVAILABLE_MODULES} state={state} selectedItem={selectedItem} onSelectItem={selectItem} />
             </div>
             <ActionButton {...buttonProps} tvState={state} />
           </div>

@@ -1,9 +1,4 @@
-export interface Module {
-  id: string;
-  name: string;
-  description: string;
-  contractAddress: string;
-}
+import { Module } from "@/types";
 
 export const AVAILABLE_MODULES: Module[] = [
   {

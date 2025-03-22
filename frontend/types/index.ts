@@ -2,11 +2,11 @@ import type React from "react"
 // Define our interface states
 export type TVState = "off" | "on" | "active"
 
-// Define our list items
-export interface Item {
-  id: number
-  title: string
-  description?: string
+export type Module = {
+  id: string;
+  name: string;
+  description: string;
+  contractAddress: string;
 }
 
 // Component props types
@@ -15,10 +15,10 @@ export interface CircularDisplayProps {
 }
 
 export interface ListDisplayProps {
-  items: Item[]
+  items: Module[]
   state: TVState
-  selectedItem: Item | null
-  onSelectItem: (item: Item) => void
+  selectedItem: Module | null
+  onSelectItem: (item: Module) => void
 }
 
 export interface DetailScreenProps {

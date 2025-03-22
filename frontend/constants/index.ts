@@ -1,29 +1,3 @@
-import type { Item } from "@/types"
-
-// Default items for the TV interface
-export const DEFAULT_ITEMS: Item[] = [
-  {
-    id: 1,
-    title: "Social Recovery",
-    description: "Restore access to your vault using trusted contacts.",
-  },
-  {
-    id: 2,
-    title: "System Diagnostics",
-    description: "Run a full system check on all components.",
-  },
-  {
-    id: 3,
-    title: "Radio Transmitter",
-    description: "Broadcast emergency signals to nearby stations.",
-  },
-  {
-    id: 4,
-    title: "Inventory Manager",
-    description: "Check and organize your collected items.",
-  },
-]
-
 // Characters for the scramble effect
 export const SCRAMBLE_CHARS =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,./<>?`~"

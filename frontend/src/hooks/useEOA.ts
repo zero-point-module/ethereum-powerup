@@ -1,19 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ethers } from 'ethers';
 import { useUserStore } from '../store/useUserStore';
-import { AVAILABLE_MODULES, type Module } from '../constants/modules';
+import { SMART_WALLET_ABI } from '../constants/SmartWalletABI';
 
 // Constants for the Sepolia network
 const SEPOLIA_CHAIN_ID = 11155111;
-const EOA_REGISTRY_ADDRESS = '0x...'; // Add the deployed registry contract address
-
-// ABI for the registry contract (simplified version)
-const EOA_REGISTRY_ABI = [
-  'function isUpgraded(address account) view returns (bool)',
-  'function getInstalledModules(address account) view returns (address[])',
-  'function upgradeAccount() external',
-  'function installModule(address module) external'
-];
+const SMART_WALLET_ADDRESS = '0x...'; // Add the deployed SmartWallet address
+const EIP7702_DELEGATION_PREFIX = '0xef0100';
 
 export function useProvider() {
   return useQuery({
@@ -45,25 +38,29 @@ export function useAccountStatus() {
     queryFn: async () => {
       if (!provider || !address) throw new Error('Provider or address not available');
       
-      const registry = new ethers.Contract(EOA_REGISTRY_ADDRESS, EOA_REGISTRY_ABI, provider);
-      const isUpgraded = await registry.isUpgraded(address);
-      const installedModuleAddresses = await registry.getInstalledModules(address);
+      // Check if the EOA has been upgraded by looking at its code
+      const code = await provider.getCode(address);
+      const isUpgraded = code.startsWith(EIP7702_DELEGATION_PREFIX);
       
-      // Map the addresses to module information
-      const installedModules = installedModuleAddresses
-        .map((moduleAddress: string) => 
-          AVAILABLE_MODULES.find(
-            (module: Module) => module.contractAddress.toLowerCase() === moduleAddress.toLowerCase()
-          )
-        )
-        .filter((module: Module | undefined): module is Module => module !== undefined);
+      // If upgraded, get the delegated contract address
+      let delegatedAddress = null;
+      if (isUpgraded) {
+        delegatedAddress = '0x' + code.slice(EIP7702_DELEGATION_PREFIX.length);
+      }
+      
+      // Get the current number if the account is upgraded
+      let currentNumber = null;
+      if (isUpgraded && delegatedAddress) {
+        const smartWallet = new ethers.Contract(delegatedAddress, SMART_WALLET_ABI, provider);
+        currentNumber = await smartWallet.getNumber();
+      }
       
       useUserStore.getState().setIsUpgraded(isUpgraded);
-      useUserStore.getState().setInstalledModules(installedModules);
       
       return {
         isUpgraded,
-        installedModules,
+        delegatedAddress,
+        currentNumber
       };
     },
   });
@@ -78,11 +75,20 @@ export function useUpgradeAccount() {
       if (!provider) throw new Error('Provider not available');
       
       const signer = await provider.getSigner();
-      const registry = new ethers.Contract(EOA_REGISTRY_ADDRESS, EOA_REGISTRY_ABI, signer);
       
-      const tx = await registry.upgradeAccount();
+      // Create the EIP-7702 authorization
+      const auth = await signer.authorize({
+        address: SMART_WALLET_ADDRESS,
+      });
+      
+      // Send the EIP-7702 transaction
+      const tx = await signer.sendTransaction({
+        type: 4, // EIP-7702 transaction type
+        to: ethers.ZeroAddress,
+        authorizationList: [auth],
+      });
+      
       await tx.wait();
-      
       return tx;
     },
     onSuccess: () => {
@@ -91,18 +97,25 @@ export function useUpgradeAccount() {
   });
 }
 
-export function useInstallModule() {
+export function useSetNumber() {
   const queryClient = useQueryClient();
   const { data: provider } = useProvider();
+  const { data: accountStatus } = useAccountStatus();
   
   return useMutation({
-    mutationFn: async (moduleAddress: string) => {
-      if (!provider) throw new Error('Provider not available');
+    mutationFn: async (newNumber: number) => {
+      if (!provider || !accountStatus?.delegatedAddress) {
+        throw new Error('Provider or delegated address not available');
+      }
       
       const signer = await provider.getSigner();
-      const registry = new ethers.Contract(EOA_REGISTRY_ADDRESS, EOA_REGISTRY_ABI, signer);
+      const smartWallet = new ethers.Contract(
+        accountStatus.delegatedAddress,
+        SMART_WALLET_ABI,
+        signer
+      );
       
-      const tx = await registry.installModule(moduleAddress);
+      const tx = await smartWallet.setNumber(newNumber);
       await tx.wait();
       
       return tx;

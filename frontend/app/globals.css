@@ -1,0 +1,274 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 214, 219, 220;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  font-family: "Courier New", monospace;
+}
+
+/* Custom scrollbar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #001000;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #003000;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #004000;
+}
+
+/* CRT flicker animation */
+@keyframes flicker {
+  0% {
+    opacity: 0.1;
+  }
+  5% {
+    opacity: 0.2;
+  }
+  10% {
+    opacity: 0.1;
+  }
+  15% {
+    opacity: 0.3;
+  }
+  20% {
+    opacity: 0.1;
+  }
+  25% {
+    opacity: 0.2;
+  }
+  30% {
+    opacity: 0.1;
+  }
+  35% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 0.1;
+  }
+  45% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  55% {
+    opacity: 0.3;
+  }
+  60% {
+    opacity: 0.1;
+  }
+  65% {
+    opacity: 0.2;
+  }
+  70% {
+    opacity: 0.1;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  80% {
+    opacity: 0.1;
+  }
+  85% {
+    opacity: 0.2;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  95% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+/* Power Up button glow animation */
+@keyframes enhanced-glow {
+  0% {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 255, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.9), 0 0 40px rgba(0, 255, 0, 0.6), 0 0 60px rgba(0, 255, 0, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 255, 0, 0.3);
+  }
+}
+
+.power-up-glow {
+  animation: enhanced-glow 1.5s infinite;
+}
+
+/* Arrow bounce animation */
+@keyframes arrow-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.arrow-bounce {
+  display: inline-block;
+  animation: arrow-bounce 1s ease-in-out infinite;
+}
+
+/* CRT on/off animation */
+@keyframes turnOn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    transform: scale(1.2);
+    opacity: 0.3;
+  }
+  30% {
+    transform: scale(0.95);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 3D perspective for Ethereum logo */
+.eth-3d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* 3D glow effect */
+@keyframes pulse3d {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(0, 255, 0, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.8));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px rgba(0, 255, 0, 0.5));
+  }
+}
+
+.glow-3d {
+  animation: pulse3d 2s infinite;
+}
+
+/* Unified glow animation for POWER UP button */
+@keyframes unified-glow {
+  0%,
+  100% {
+    border-color: #00aa00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4), inset 0 0 5px rgba(0, 255, 0, 0.4);
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
+    filter: drop-shadow(0 0 2px rgba(0, 255, 0, 0.4));
+  }
+  50% {
+    border-color: #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.4), inset 0 0 15px rgba(0, 255, 0, 0.6);
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 15px rgba(0, 255, 0, 0.4);
+    filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.8));
+  }
+}
+
+.unified-glow {
+  animation: unified-glow 2s infinite ease-in-out;
+  color: #00ff00;
+  z-index: 10;
+}
+
+.unified-glow span,
+.unified-glow svg {
+  filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.8));
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+

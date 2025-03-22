@@ -1,6 +1,6 @@
-"use client"
+'use client';
 
-import type { TVFrameProps } from "@/types"
+import type { TVFrameProps } from '@/types';
 
 export function TVFrame({ children, onPowerClick, isPowered }: TVFrameProps) {
   return (
@@ -34,7 +34,7 @@ export function TVFrame({ children, onPowerClick, isPowered }: TVFrameProps) {
         onClick={onPowerClick}
         className={`
           absolute -bottom-1 right-8 w-6 h-6 
-          ${isPowered ? "bg-orange-600" : "bg-orange-800"} 
+          ${isPowered ? 'bg-orange-600' : 'bg-orange-800'} 
           rounded-sm border-2 border-gray-700 shadow-md
           transition-colors duration-200
           hover:bg-orange-500 active:bg-orange-700
@@ -48,7 +48,7 @@ export function TVFrame({ children, onPowerClick, isPowered }: TVFrameProps) {
         className={`
         absolute -bottom-1 right-16 w-2 h-2 rounded-full 
         transition-colors duration-300
-        ${isPowered ? "bg-green-500" : "bg-gray-700"}
+        ${isPowered ? 'bg-green-500' : 'bg-gray-700'}
       `}
       ></div>
 
@@ -58,13 +58,6 @@ export function TVFrame({ children, onPowerClick, isPowered }: TVFrameProps) {
           <div key={i} className="w-1 h-3 bg-gray-900 rounded-sm"></div>
         ))}
       </div>
-
-      {/* Screws in corners */}
-      <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-gray-600 border border-gray-700"></div>
-      <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-gray-600 border border-gray-700"></div>
-      <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-gray-600 border border-gray-700"></div>
-      <div className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-gray-600 border border-gray-700"></div>
     </div>
-  )
+  );
 }
-

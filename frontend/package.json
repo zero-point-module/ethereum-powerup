@@ -1,0 +1,17 @@
+{
+  "name": "eth-powerup-frontend",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.69.0",
+    "ethers": "^6.13.5",
+    "react": "^19.0.0",
+    "zustand": "^5.0.3"
+  }
+}

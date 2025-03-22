@@ -1,0 +1,15 @@
+{
+  "name": "ethereum-powerup-contracts",
+  "dependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.4.7",
+    "hardhat": "^2.22.19"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.2.0",
+    "@types/mocha": "^10.0.10",
+    "ethers": "6.13.6-beta.1",
+    "ts-node": "^10.9.2"
+  }
+}

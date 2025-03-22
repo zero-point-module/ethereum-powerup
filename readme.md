@@ -5,7 +5,6 @@ Gonzalo Othacehe
 Ignacio Presas
 Esteban Viera
 
-
 Project:
 Ethereum Powerup
 
@@ -17,6 +16,11 @@ Functional Scope:
 2. Powerup your Wallet!
 3. Install your Modules from the Modules Playstore!
 4. Welcome to the future. 
+
+Technical components:
+EIP-4337: Account Abstraction Using Alt Mempool
+ERC-7579: Minimal Modular Smart Accounts 
+EIP-7702: Set EOA account code
 
 Q&A
 1. Q: Why would I want to "powerup" my Ethereum account in the first place?

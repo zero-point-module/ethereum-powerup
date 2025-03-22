@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.69.0",
-    "ethers": "^6.13.5",
+    "ethers": "6.13.6-beta.1",
     "react": "^19.0.0",
     "zustand": "^5.0.3"
   }

@@ -2,48 +2,26 @@ export interface Module {
   id: string;
   name: string;
   description: string;
-  features: string[];
+  contractAddress: string;
 }
 
 export const AVAILABLE_MODULES: Module[] = [
   {
-    id: 'recovery',
-    name: 'Account Recovery',
-    description: 'Enable social recovery and backup mechanisms for your account',
-    features: [
-      'Social recovery through trusted contacts',
-      'Time-locked recovery',
-      'Backup key management'
-    ]
+    id: 'erc20-batch',
+    name: 'ERC20 Batch Transfer',
+    description: 'Enables batch transfer of ERC20 tokens in a single transaction',
+    contractAddress: '0x...' // You'll need to deploy and add the actual contract address
   },
   {
-    id: 'batching',
-    name: 'Transaction Batching',
-    description: 'Execute multiple transactions in a single operation',
-    features: [
-      'Bundle multiple transactions',
-      'Gas optimization',
-      'Atomic execution'
-    ]
+    id: 'auto-swap',
+    name: 'Auto Swap',
+    description: 'Automatically swap tokens based on predefined rules',
+    contractAddress: '0x...' // You'll need to deploy and add the actual contract address
   },
   {
-    id: 'automation',
-    name: 'Smart Automation',
-    description: 'Automate recurring transactions and conditions',
-    features: [
-      'Scheduled transactions',
-      'Conditional transfers',
-      'Gas price automation'
-    ]
-  },
-  {
-    id: 'security',
-    name: 'Enhanced Security',
-    description: 'Additional security features for your account',
-    features: [
-      'Multi-signature support',
-      'Transaction limits',
-      'Address whitelisting'
-    ]
+    id: 'recurring-payments',
+    name: 'Recurring Payments',
+    description: 'Set up automated recurring payments',
+    contractAddress: '0x...' // You'll need to deploy and add the actual contract address
   }
 ]; 

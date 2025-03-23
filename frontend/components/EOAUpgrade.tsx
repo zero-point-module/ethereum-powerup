@@ -1,6 +1,7 @@
 import { useWeb3Store } from '../stores/web3Store';
 import { useEOAStatus, useUpgradeEOA, useSmartWallet, useNetwork } from '../hooks/eoa';
 import { Button } from './ui/button';
+import { CopyButton } from './ui/copy-button';
 
 export function EOAUpgrade() {
   const { 
@@ -84,8 +85,9 @@ export function EOAUpgrade() {
     <div className="space-y-4">
       {/* Wallet Info */}
       <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-500">
-          Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-500">Connected:</span>
+          {address && <CopyButton value={address} />}
         </div>
         <Button variant="outline" onClick={disconnect}>
           Disconnect
@@ -120,6 +122,12 @@ export function EOAUpgrade() {
           ) : (
             /* Smart Wallet Section */
             <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <span>Smart Wallet Address:</span>
+                {status?.delegatedAddress && (
+                  <CopyButton value={status.delegatedAddress} />
+                )}
+              </div>
               <div>
                 Current Number: {isLoadingNumber ? 'Loading...' : number?.toString()}
               </div>

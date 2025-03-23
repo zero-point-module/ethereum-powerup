@@ -1,6 +1,9 @@
 import { create } from 'zustand';
-import { JsonRpcProvider, JsonRpcSigner, Wallet } from 'ethers';
+import { JsonRpcProvider, JsonRpcSigner, Wallet, ethers } from 'ethers';
 import type { Item } from '../types/index';
+import { DEFAULT_MODULES } from '../constants/modules';
+import ModularAccountJson from '../constants/ModularAccount.json';
+import { ModularAccount } from '../types/ModularAccount';
 
 interface Web3State {
   provider: JsonRpcProvider | null;
@@ -37,9 +40,12 @@ interface Web3Actions {
   disconnect: () => void;
   reset: () => void;
   setSignerFromPrivateKey: (privateKey: string) => void;
+  loadInstalledModules: () => Promise<void>;
 }
 
 type Web3Store = Web3State & Web3Actions;
+
+const MODULE_TYPE_EXECUTOR = 2;
 
 export const useWeb3Store = create<Web3Store>((set, get) => ({
   // State
@@ -75,6 +81,9 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
         signer: wallet,
         address: wallet.address
       });
+      
+      // Load installed modules after changing signer
+      get().loadInstalledModules();
     } catch (error) {
       set({ error: error instanceof Error ? error : new Error('Failed to set signer from private key') });
     }
@@ -104,8 +113,52 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
       installedModules: [],
     }),
 
+  // Add loadInstalledModules function
+  loadInstalledModules: async () => {
+    const { signer, address } = get();
+    
+    if (!signer || !address) {
+      return;
+    }
+    
+    try {
+      const smartWallet = new ethers.Contract(
+        address,
+        ModularAccountJson.abi,
+        signer
+      ) as any as ModularAccount;
+      
+      const installedModules: Item[] = [];
+      
+      // Check each module from DEFAULT_MODULES
+      for (const module of DEFAULT_MODULES) {
+        try {
+          if (module.contractAddress === '0x0000000000000000000000000000000000000000') {
+            continue; // Skip modules with zero address
+          }
+          
+          const isInstalled = await smartWallet.isModuleInstalled(
+            MODULE_TYPE_EXECUTOR,
+            module.contractAddress,
+            ethers.AbiCoder.defaultAbiCoder().encode(['bytes'], ['0x'])
+          );
+          
+          if (isInstalled) {
+            installedModules.push(module);
+          }
+        } catch (error) {
+          console.error(`Error checking module ${module.id}:`, error);
+        }
+      }
+      
+      set({ installedModules });
+    } catch (error) {
+      console.error('Error loading installed modules:', error);
+    }
+  },
+
   connect: async () => {
-    const { setIsConnecting, setError, reset } = get();
+    const { setIsConnecting, setError, reset, loadInstalledModules } = get();
 
     setIsConnecting(true);
     setError(null);
@@ -145,6 +198,9 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
         isConnected: true,
         error: null,
       });
+      
+      // Load installed modules after setting signer and address
+      await loadInstalledModules();
     } catch (error) {
       reset();
       setError(error instanceof Error ? error : new Error('Failed to connect'));

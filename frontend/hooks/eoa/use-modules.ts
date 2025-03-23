@@ -79,20 +79,28 @@ export function useModules() {
     mutationFn: async (moduleId: string) => {
       setIsUninstalling(true);
 
-      if (!signer || !delegatedAddress) {
-        throw new Error('Signer or delegated address not available');
+      if (!signer || !address) {
+        throw new Error('Signer or address not available');
       }
 
       const module = installedModules.find((m) => m.id === moduleId);
       if (!module) throw new Error('Module not found');
 
       const smartWallet = new ethers.Contract(
-        delegatedAddress,
-        SMART_WALLET_ABI,
+        address,
+        ModularAccountJson.abi,
         signer
-      );
+      ) as any as ModularAccount;
 
-      const tx = await smartWallet.uninstallModule(module.contractAddress);
+      const tx = await smartWallet.uninstallModule(
+        MODULE_TYPE_EXECUTOR,
+        module.contractAddress,
+        ethers.AbiCoder.defaultAbiCoder().encode(['bytes'], ['0x']),
+        {
+          gasLimit: 1_000_000,
+        }
+      );
+      
       await tx.wait();
       removeModule(moduleId);
       return tx;

@@ -1,13 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ethers } from 'ethers';
-import { useWeb3 } from '../../contexts/Web3Context';
-import { useWeb3Store } from '../../store/web3Store';
+import { useWeb3Store } from '../../stores/web3Store';
 import { SMART_WALLET_ABI } from '../../constants/SmartWalletABI';
 import type { Module } from '../../types/modules';
 
 export function useModules() {
-  const { signer } = useWeb3();
-  const { address, delegatedAddress, addModule, removeModule } = useWeb3Store();
+  const { 
+    signer, 
+    address, 
+    delegatedAddress,
+    installedModules,
+    addModule,
+    removeModule 
+  } = useWeb3Store();
   const queryClient = useQueryClient();
 
   const install = useMutation({
@@ -38,7 +43,7 @@ export function useModules() {
         throw new Error('Signer or delegated address not available');
       }
 
-      const module = useWeb3Store.getState().installedModules.find(m => m.id === moduleId);
+      const module = installedModules.find(m => m.id === moduleId);
       if (!module) throw new Error('Module not found');
 
       const smartWallet = new ethers.Contract(
@@ -62,5 +67,6 @@ export function useModules() {
     uninstall,
     isInstalling: install.isPending,
     isUninstalling: uninstall.isPending,
+    installedModules,
   };
 } 

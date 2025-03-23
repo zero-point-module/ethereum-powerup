@@ -1,11 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { useWeb3 } from '../../contexts/Web3Context';
-import { useWeb3Store } from '../../store/web3Store';
+import { useWeb3Store } from '../../stores/web3Store';
 import { SEPOLIA_CHAIN_ID, EIP7702_DELEGATION_PREFIX } from './constants';
 
 export function useEOAStatus() {
-  const { provider } = useWeb3();
-  const { address, chainId, setIsUpgraded, setDelegatedAddress } = useWeb3Store();
+  const { provider, address, chainId, setIsUpgraded, setDelegatedAddress } = useWeb3Store();
   
   return useQuery({
     queryKey: ['eoaStatus', address],

@@ -13,7 +13,7 @@ export function useUpgradeEOA() {
       if (!signer) {
         throw new Error("Wallet not connected");
       }
-      
+
       if (!(signer instanceof EIP7702Signer)) {
         throw new Error("Wallet does not support EIP-7702");
       }
@@ -23,7 +23,14 @@ export function useUpgradeEOA() {
         const auth = await signer.authorize({
           address: SMART_WALLET_ADDRESS,
         });
+        console.log(
+          "use-upgrade-eoa: signer",
+          signer,
+          "is authorizing to get the code from",
+          SMART_WALLET_ADDRESS
+        );
 
+        console.log("use-upgrade-eoa: relayer (sender) address", await relayer.getAddress());
         // Send the upgrade transaction
         const tx = await relayer?.sendTransaction({
           type: 4,
@@ -31,10 +38,12 @@ export function useUpgradeEOA() {
           authorizationList: [auth as any],
         });
 
+        console.log("use-upgrade-eoa: tx", tx);
+
         // Wait for confirmation
         const receipt = await tx.wait();
 
-        console.log('Upgrade transaction receipt:', receipt);
+        console.log("Upgrade transaction receipt:", receipt);
         return receipt;
       } catch (error) {
         // Enhance error messages for common cases
@@ -52,8 +61,8 @@ export function useUpgradeEOA() {
     },
     onSuccess: () => {
       // Invalidate relevant queries
-      queryClient.invalidateQueries({ 
-        queryKey: ["eoaStatus", address] 
+      queryClient.invalidateQueries({
+        queryKey: ["eoaStatus", address],
       });
     },
   });

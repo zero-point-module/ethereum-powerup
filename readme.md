@@ -28,3 +28,11 @@ Q&A
 
 2. Q: Give me a practical example, I don't get it.
 2. A: Gotcha. Let's say your private key is stolen or compromised. All your funds are gone, right?. This will no longer happen. The tech is ready to prevent this. You can install a "Spending Limits" Module where you can pre-define how much your account can extract daily, and then it will require more signatures or delays for larger extractions. Complementing the limits, you can install a "Social Recovery" Module, and ask your guardians to recover your account before your attacker can substract more. The UX of a bank account, but decentralized.   
+
+
+Resources and Thanks:
+EIP 7702: https://eips.ethereum.org/EIPS/eip-7702
+Ethers 7702 Implementation: https://github.com/ethers-io/ethers.js/issues/4916
+Red Guild 7702 Playground: https://github.com/theredguild/7702-goat
+
+

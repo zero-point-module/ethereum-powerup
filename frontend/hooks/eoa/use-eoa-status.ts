@@ -13,6 +13,7 @@ export function useEOAStatus() {
       
       const code = await provider.getCode(address);
       const isUpgraded = code.startsWith(EIP7702_DELEGATION_PREFIX);
+      console.log('isUpgraded', isUpgraded);
       const delegatedAddress = isUpgraded ? '0x' + code.slice(EIP7702_DELEGATION_PREFIX.length) : null;
       
       setIsUpgraded(isUpgraded);

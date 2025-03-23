@@ -100,14 +100,20 @@ export function DetailScreen({
       <div className="mb-6">
         <h1 className="text-xl mb-1">SOCIAL RECOVERY MODULE v1.2.4</h1>
         <div className="border-b border-[#00ff00] mb-4"></div>
-        <p className="mb-2">STATUS: {isSocialRecoveryInstalled ? 'CONFIGURED' : 'AWAITING CONFIGURATION'}</p>
+        <p className="mb-2">
+          STATUS:{' '}
+          {isSocialRecoveryInstalled ? 'CONFIGURED' : 'AWAITING CONFIGURATION'}
+        </p>
       </div>
 
-      
       <div className="mb-6">
         <p>Welcome to the Social Recovery setup wizard.</p>
         <p>This module enables wallet recovery through trusted contacts.</p>
-        <p>Each contact will hold a fragment of your recovery key.</p>
+        <p>
+          Each contact will be a designated guardian who will be able to help
+          you recover your wallet if the minimum threshold of guardians are
+          reached.
+        </p>
       </div>
 
       <div className="mb-6">

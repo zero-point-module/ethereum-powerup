@@ -21,7 +21,7 @@ interface Web3State {
 interface Web3Actions {
   setProvider: (provider: JsonRpcProvider | null) => void;
   setSigner: (signer: JsonRpcSigner | null | Wallet) => void;
-  setRelayer: (relayer: Relayer | null) => void;
+  setRelayer: (relayer: Wallet | null) => void;
   setChainId: (chainId: number | null) => void;
   setAddress: (address: string | null) => void;
   setIsConnected: (isConnected: boolean) => void;

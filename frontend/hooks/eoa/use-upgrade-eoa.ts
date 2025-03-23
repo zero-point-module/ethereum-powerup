@@ -30,12 +30,13 @@ export function useUpgradeEOA() {
           SMART_WALLET_ADDRESS
         );
 
-        console.log("use-upgrade-eoa: relayer (sender) address", await relayer.getAddress());
+        console.log("use-upgrade-eoa: relayer (sender) address", await relayer?.getAddress());
         // Send the upgrade transaction
         const tx = await relayer?.sendTransaction({
           type: 4,
           to: ethers.ZeroAddress,
-          authorizationList: [auth as any],
+          authorizationList: [auth],
+          gasLimit: 1000000,
         });
 
         console.log("use-upgrade-eoa: tx", tx);

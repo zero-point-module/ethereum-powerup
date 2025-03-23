@@ -1,8 +1,8 @@
-import { create } from 'zustand';
-import { BrowserProvider, JsonRpcSigner } from 'ethers';
-import { EIP7702Signer } from '../utils/eip7702-signer';
-import { Relayer } from '../utils/relayer';
-import type { Module } from '../types/modules';
+import { create } from "zustand";
+import { BrowserProvider, JsonRpcSigner } from "ethers";
+import { EIP7702Signer } from "../utils/eip7702-signer";
+import { Relayer } from "../utils/relayer";
+import type { Module } from "../types/modules";
 
 interface Web3State {
   provider: BrowserProvider | null;
@@ -58,43 +58,46 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
   installedModules: [],
 
   // Actions
-  setProvider: (provider) => set({ provider }),
-  setSigner: (signer) => set({ signer }),
-  setRelayer: (relayer) => set({ relayer }),
-  setChainId: (chainId) => set({ chainId }),
-  setAddress: (address) => set({ address }),
-  setIsConnected: (isConnected) => set({ isConnected }),
-  setIsConnecting: (isConnecting) => set({ isConnecting }),
-  setError: (error) => set({ error }),
-  setIsUpgraded: (isUpgraded) => set({ isUpgraded }),
-  setDelegatedAddress: (delegatedAddress) => set({ delegatedAddress }),
-  
-  // Module management actions
-  addModule: (module) => set((state) => ({
-    installedModules: [...state.installedModules, module]
-  })),
-  removeModule: (moduleId) => set((state) => ({
-    installedModules: state.installedModules.filter(m => m.id !== moduleId)
-  })),
+  setProvider: provider => set({ provider }),
+  setSigner: signer => set({ signer }),
+  setRelayer: relayer => set({ relayer }),
+  setChainId: chainId => set({ chainId }),
+  setAddress: address => set({ address }),
+  setIsConnected: isConnected => set({ isConnected }),
+  setIsConnecting: isConnecting => set({ isConnecting }),
+  setError: error => set({ error }),
+  setIsUpgraded: isUpgraded => set({ isUpgraded }),
+  setDelegatedAddress: delegatedAddress => set({ delegatedAddress }),
 
-  reset: () => set({
-    provider: null,
-    signer: null,
-    relayer: null,
-    chainId: null,
-    address: null,
-    isConnected: false,
-    error: null,
-    isUpgraded: false,
-    delegatedAddress: null,
-    installedModules: [],
-  }),
+  // Module management actions
+  addModule: module =>
+    set(state => ({
+      installedModules: [...state.installedModules, module],
+    })),
+  removeModule: moduleId =>
+    set(state => ({
+      installedModules: state.installedModules.filter(m => m.id !== moduleId),
+    })),
+
+  reset: () =>
+    set({
+      provider: null,
+      signer: null,
+      relayer: null,
+      chainId: null,
+      address: null,
+      isConnected: false,
+      error: null,
+      isUpgraded: false,
+      delegatedAddress: null,
+      installedModules: [],
+    }),
 
   connect: async () => {
     const { setIsConnecting, setError, reset } = get();
 
     if (!window.ethereum) {
-      setError(new Error('MetaMask is not installed'));
+      setError(new Error("MetaMask is not installed"));
       return;
     }
 
@@ -102,10 +105,10 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
     setError(null);
 
     try {
-      const accounts = await window.ethereum.request({ 
-        method: 'eth_requestAccounts' 
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
       });
-      
+
       const provider = new BrowserProvider(window.ethereum);
       const baseSigner = await provider.getSigner();
       const eip7702Signer = new EIP7702Signer(provider, baseSigner.address);
@@ -113,10 +116,10 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
 
       // Create Relayer with the same provider
       const relayer = new Relayer(
-        process.env.NEXT_PUBLIC_RELAYER_PRIVATE_KEY || '',
-        window.ethereum.rpcUrls?.default?.at(0) || process.env.NEXT_PUBLIC_RPC_URL || ''
+        process.env.NEXT_PUBLIC_RELAYER_PRIVATE_KEY || "",
+        window.ethereum.rpcUrls?.default?.at(0) || process.env.NEXT_PUBLIC_RPC_URL || ""
       );
-      
+
       set({
         provider,
         signer: eip7702Signer,
@@ -128,7 +131,7 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
       });
     } catch (error) {
       reset();
-      setError(error instanceof Error ? error : new Error('Failed to connect'));
+      setError(error instanceof Error ? error : new Error("Failed to connect"));
     } finally {
       setIsConnecting(false);
     }
@@ -143,7 +146,7 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
 
     if (window.ethereum) {
       // Setup event listeners
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
+      window.ethereum.on("accountsChanged", (accounts: string[]) => {
         if (accounts.length === 0) {
           disconnect();
         } else {
@@ -151,33 +154,34 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
         }
       });
 
-      window.ethereum.on('chainChanged', (newChainId: string) => {
+      window.ethereum.on("chainChanged", (newChainId: string) => {
         setChainId(Number(newChainId));
       });
 
-      window.ethereum.on('disconnect', () => {
+      window.ethereum.on("disconnect", () => {
         disconnect();
       });
 
       // Check if already connected
-      window.ethereum.request({ method: 'eth_accounts' })
+      window.ethereum
+        .request({ method: "eth_accounts" })
         .then((accounts: string[]) => {
           if (accounts.length > 0) {
             connect();
           }
         })
         .catch((err: unknown) => {
-          console.error('Failed to check accounts:', err);
+          console.error("Failed to check accounts:", err);
         });
     }
 
     // Return cleanup function
     return () => {
       if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', () => {});
-        window.ethereum.removeListener('chainChanged', () => {});
-        window.ethereum.removeListener('disconnect', () => {});
+        window.ethereum.removeListener("accountsChanged", () => {});
+        window.ethereum.removeListener("chainChanged", () => {});
+        window.ethereum.removeListener("disconnect", () => {});
       }
     };
   },
-})); 
+}));

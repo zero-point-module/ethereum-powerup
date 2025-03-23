@@ -1,5 +1,4 @@
 import { ethers as experimentalEthers, Wallet } from "ethers";
-import { CounterModule, ModularAccount } from "../typechain-types";
 
 main().catch(error => {
   console.error(error);

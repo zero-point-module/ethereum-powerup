@@ -1,13 +1,11 @@
 import { create } from 'zustand';
-import { BrowserProvider, JsonRpcSigner } from 'ethers';
-import { EIP7702Signer } from '../utils/eip7702-signer';
-import { Relayer } from '../utils/relayer';
+import { JsonRpcProvider, JsonRpcSigner, Wallet } from 'ethers';
 import type { Module } from '../types/modules';
 
 interface Web3State {
-  provider: BrowserProvider | null;
-  signer: JsonRpcSigner | EIP7702Signer | null;
-  relayer: Relayer | null;
+  provider: JsonRpcProvider | null;
+  signer: JsonRpcSigner | null | Wallet ;
+  relayer: Wallet | null;
   chainId: number | null;
   address: string | null;
   isConnected: boolean;
@@ -21,8 +19,8 @@ interface Web3State {
 }
 
 interface Web3Actions {
-  setProvider: (provider: BrowserProvider | null) => void;
-  setSigner: (signer: JsonRpcSigner | EIP7702Signer | null) => void;
+  setProvider: (provider: JsonRpcProvider | null) => void;
+  setSigner: (signer: JsonRpcSigner | null | Wallet) => void;
   setRelayer: (relayer: Relayer | null) => void;
   setChainId: (chainId: number | null) => void;
   setAddress: (address: string | null) => void;
@@ -106,22 +104,30 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
         method: 'eth_requestAccounts' 
       });
       
-      const provider = new BrowserProvider(window.ethereum);
-      const baseSigner = await provider.getSigner();
-      const eip7702Signer = new EIP7702Signer(provider, baseSigner.address);
+      const provider = new JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL || '');
+      
+      // Make sure provider is connected before creating wallet
+      await provider.getNetwork();
+      
+      const signer = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY || '', provider);
       const network = await provider.getNetwork();
 
       // Create Relayer with the same provider
-      const relayer = new Relayer(
+      const relayerProvider = new JsonRpcProvider(window.ethereum.rpcUrls?.default?.at(0) || process.env.NEXT_PUBLIC_RPC_URL || '');
+      
+      // Make sure relayer provider is connected
+      await relayerProvider.getNetwork();
+      
+      const relayer = new Wallet(
         process.env.NEXT_PUBLIC_RELAYER_PRIVATE_KEY || '',
-        window.ethereum.rpcUrls?.default?.at(0) || process.env.NEXT_PUBLIC_RPC_URL || ''
+        relayerProvider
       );
       
       set({
         provider,
-        signer: eip7702Signer,
+        signer,
         relayer,
-        address: accounts[0],
+        address: signer.address,
         chainId: Number(network.chainId),
         isConnected: true,
         error: null,

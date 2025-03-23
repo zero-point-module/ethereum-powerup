@@ -3,9 +3,8 @@ import './globals.css'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: 'Ethereum Powerup',
+  description: 'Ethereum Powerup',
 }
 
 export default function RootLayout({

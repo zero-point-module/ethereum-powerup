@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useCallback, memo } from 'react';
-import type { ListDisplayProps } from '@/types';
-import { useModulesStore } from '@/store/modules-store';
+import type { Item, ListDisplayProps } from '@/types';
+import { useModules } from '@/hooks/eoa';
 
 // Create the component function
 function ListDisplayComponent({
@@ -13,14 +13,14 @@ function ListDisplayComponent({
 }: ListDisplayProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOnlyInstalled, setShowOnlyInstalled] = useState(false);
-  const { isModuleInstalled } = useModulesStore();
+  const { installedModules } = useModules();
 
   // Filter items based on search query and installation status
   const filteredItems = items.filter((item) => {
-    const matchesSearch = item.title
+    const matchesSearch = item.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchesInstalled = !showOnlyInstalled || isModuleInstalled(item.id);
+    const matchesInstalled = !showOnlyInstalled || installedModules.includes(item);
     return matchesSearch && matchesInstalled;
   });
 
@@ -130,7 +130,7 @@ function ListDisplayComponent({
                 item={item}
                 state={state}
                 isSelected={selectedItem?.id === item.id}
-                isInstalled={isModuleInstalled(item.id)}
+                isInstalled={installedModules.includes(item)}
                 onSelect={() => state === 'active' && onSelectItem(item)}
               />
             ))}
@@ -158,7 +158,7 @@ function ListDisplayComponent({
 
 // Memoized list item component to prevent unnecessary re-renders
 interface ListItemProps {
-  item: { id: number; title: string };
+  item: Item
   state: 'off' | 'on' | 'active';
   isSelected: boolean;
   isInstalled: boolean;
@@ -191,7 +191,7 @@ const ListItem = memo(function ListItem({
         ${isInstalled ? 'border-r-[#00ff00] border-r-4' : ''}
       `}
       onClick={onSelect}
-      title={isSelected ? 'Click to deselect' : item.title}
+      title={isSelected ? 'Click to deselect' : item.name}
     >
       {/* Installation indicator - positioned absolutely to avoid affecting layout */}
       {isInstalled && (
@@ -206,7 +206,7 @@ const ListItem = memo(function ListItem({
         }`}
       >
         {isSelected ? '> ' : ''}
-        {item.title}{' '}
+        {item.name}{' '}
         {isSelected && (
           <span className="text-xs ml-1 opacity-70">[click to deselect]</span>
         )}

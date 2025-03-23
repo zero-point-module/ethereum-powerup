@@ -9,10 +9,10 @@ import { DEFAULT_MODULES } from '@/constants';
 import { useModules } from '@/hooks/eoa/use-modules';
 export default function VintageTV() {
   // Get state and actions from Zustand stores
-  const { state, selectedItem, turnOn, activate, togglePower, selectItem } =
-    useTVStore();
+  const { state, selectedItem, turnOn, activate, selectItem } = useTVStore();
 
-  const { installedModules, install, uninstall, isInstalling, isUninstalling } = useModules();
+  const { installedModules, install, uninstall, isInstalling, isUninstalling } =
+    useModules();
 
   const [isWorkbenchActive, setIsWorkbenchActive] = useState(false);
 
@@ -53,7 +53,7 @@ export default function VintageTV() {
 
   return (
     <div className="w-[900px] h-[600px] relative">
-      <TVFrame onPowerClick={togglePower} isPowered={state !== 'off'}>
+      <TVFrame>
         <div className="flex h-full">
           {/* Left side */}
           <TVSidebar

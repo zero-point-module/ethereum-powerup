@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '../components/buttons/button-animations.css';
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -17,7 +18,7 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
-  font-family: "Courier New", monospace;
+  font-family: 'Courier New', monospace;
 }
 
 /* Custom scrollbar */
@@ -111,7 +112,8 @@ body {
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 255, 0, 0.3);
   }
   50% {
-    box-shadow: 0 0 25px rgba(0, 255, 0, 0.9), 0 0 40px rgba(0, 255, 0, 0.6), 0 0 60px rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.9), 0 0 40px rgba(0, 255, 0, 0.6),
+      0 0 60px rgba(0, 255, 0, 0.3);
   }
   100% {
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.6), 0 0 20px rgba(0, 255, 0, 0.3);
@@ -194,13 +196,15 @@ body {
   0%,
   100% {
     border-color: #00aa00;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4), inset 0 0 5px rgba(0, 255, 0, 0.4);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4),
+      inset 0 0 5px rgba(0, 255, 0, 0.4);
     text-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
     filter: drop-shadow(0 0 2px rgba(0, 255, 0, 0.4));
   }
   50% {
     border-color: #00ff00;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.4), inset 0 0 15px rgba(0, 255, 0, 0.6);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.4),
+      inset 0 0 15px rgba(0, 255, 0, 0.6);
     text-shadow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 15px rgba(0, 255, 0, 0.4);
     filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.8));
   }
@@ -271,4 +275,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-

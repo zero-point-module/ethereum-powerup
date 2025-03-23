@@ -20,7 +20,8 @@ function ListDisplayComponent({
     const matchesSearch = item.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchesInstalled = !showOnlyInstalled || installedModules.includes(item);
+    const matchesInstalled =
+      !showOnlyInstalled || installedModules.includes(item);
     return matchesSearch && matchesInstalled;
   });
 
@@ -159,7 +160,7 @@ function ListDisplayComponent({
 
 // Memoized list item component to prevent unnecessary re-renders
 interface ListItemProps {
-  item: Item
+  item: Item;
   state: 'off' | 'on' | 'active';
   isSelected: boolean;
   isInstalled: boolean;

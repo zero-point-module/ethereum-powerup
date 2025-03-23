@@ -96,6 +96,7 @@ export function useUpgradeEOA() {
 
   return {
     upgradeEOA: upgradeMutation.mutate,
+    upgradeEOAAsync: upgradeMutation.mutateAsync,
     isUpgrading: upgradeMutation.isPending,
     error: upgradeMutation.error,
     isReady: !!signer,

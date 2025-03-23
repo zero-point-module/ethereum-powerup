@@ -29,8 +29,3 @@ export const DEFAULT_MODULES: Item[] = [
     contractAddress: '0x0000000000000000000000000000000000000000',
   },
 ];
-
-/**
- * Local storage key for installed modules
- */
-export const STORAGE_KEY = 'installedModules';

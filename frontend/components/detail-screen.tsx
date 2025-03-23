@@ -96,7 +96,7 @@ export function DetailScreen({
 
   // Get module-specific content if a module is selected
   const content = selectedItem
-    ? getModuleContent(selectedItem.id)
+    ? getModuleContent(Number(selectedItem.id))
     : DEFAULT_TERMINAL_CONTENT;
 
   const isActive = state === 'active' && selectedItem !== null;
@@ -104,7 +104,7 @@ export function DetailScreen({
   // Use key prop based on selectedItem to force re-render and restart animation
   const scrambleKey = selectedItem ? `module-${selectedItem.id}` : 'no-module';
 
-  const { displayText, scrambling } = useTextScramble({
+  const { displayText } = useTextScramble({
     text: content,
     isActive: isActive && !isWorkbenchActive,
     key: scrambleKey, // This will trigger the animation reset when the module changes
@@ -183,7 +183,7 @@ export function DetailScreen({
                     WORKBENCH MODE
                   </div>
                   <div className="text-[#00ff00] font-mono text-md opacity-70 mb-8">
-                    Configuring: {selectedItem.title}
+                    Configuring: {selectedItem.name}
                   </div>
                   <div className="w-16 h-16 border-2 border-[#00ff00] rounded-full flex items-center justify-center animate-pulse">
                     <svg

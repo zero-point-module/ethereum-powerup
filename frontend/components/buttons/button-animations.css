@@ -1,0 +1,31 @@
+@keyframes arrow-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.arrow-bounce {
+  animation: arrow-bounce 1.5s ease-in-out infinite;
+}
+
+.unified-glow {
+  box-shadow: 0 0 12px rgba(0, 255, 0, 0.5);
+}
+
+@keyframes text-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.text-pulse {
+  animation: text-pulse 1.2s ease-in-out infinite;
+}

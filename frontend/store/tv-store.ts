@@ -16,7 +16,6 @@ interface TVStore {
   turnOn: () => void;
   turnOff: () => void;
   activate: () => void;
-  togglePower: () => void;
   selectItem: (item: Item) => void;
   clearSelection: () => void;
   initializeFromWallet: () => Promise<void>;
@@ -38,15 +37,6 @@ export const useTVStore = create<TVStore>((set, get) => ({
     const { state } = get();
     if (state === 'on') {
       set({ state: 'active', selectedItem: null });
-    }
-  },
-
-  togglePower: () => {
-    const { state, turnOn, turnOff } = get();
-    if (state === 'off') {
-      turnOn();
-    } else {
-      turnOff();
     }
   },
 
@@ -96,21 +86,23 @@ export const useTVStore = create<TVStore>((set, get) => ({
         // Check EOA status directly from provider
         const code = await provider.getCode(address);
         const hasPoweredUp = code !== '0x';
-        
-        console.log('TV Store - Wallet status:', { 
+
+        console.log('TV Store - Wallet status:', {
           address,
           hasPoweredUp,
           isUpgraded: web3Store.isUpgraded,
-          codeLength: code.length
+          codeLength: code.length,
         });
-        
+
         // Set TV state based on upgrade status
         if (hasPoweredUp || isUpgraded) {
           console.log('TV Store - Wallet is upgraded, activating TV');
           // Wallet is upgraded, turn TV on and activate
           set({ state: 'active', isInitialized: true });
         } else {
-          console.log('TV Store - Wallet is connected but not upgraded, turning on TV');
+          console.log(
+            'TV Store - Wallet is connected but not upgraded, turning on TV'
+          );
           // Wallet is connected but not upgraded, just turn on
           set({ state: 'on', isInitialized: true });
         }

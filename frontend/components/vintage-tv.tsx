@@ -1,75 +1,77 @@
-"use client"
+'use client';
 
-import { useMemo } from "react"
-import { TVFrame } from "./tv-frame"
-import { CircularDisplay } from "./circular-display"
-import { ListDisplay } from "./list-display"
-import { DetailScreen } from "./detail-screen"
-import { ActionButton } from "./action-button"
-import { useTVState } from "@/hooks/use-tv-state"
-import { AVAILABLE_MODULES } from "@/constants/modules"
-import { useWeb3 } from "@/hooks/use-web3"
-import { useModules, useUpgradeEOA } from "@/hooks/eoa"
+import { useCallback, useState, useEffect } from 'react';
+import { TVFrame } from './tv-frame';
+import { TVSidebar } from './tv-sidebar';
+import { TVMainDisplay } from './tv-main-display';
+import { useTVStore } from '@/store/tv-store';
+import { useModulesStore } from '@/store/modules-store';
+import { DEFAULT_MODULES } from '@/constants';
 
 export default function VintageTV() {
-  const { state, selectedItem, turnOn, togglePower, selectItem } = useTVState()
-  const { installedModules } = useWeb3()
-  const { install: { mutate: installModule } } = useModules()
-  const { mutate: activateSmartWallet } = useUpgradeEOA()
+  // Get state and actions from Zustand stores
+  const { state, selectedItem, turnOn, activate, togglePower, selectItem } =
+    useTVStore();
+
+  const { isModuleInstalled, installModule, uninstallModule } =
+    useModulesStore();
+
+  const [isWorkbenchActive, setIsWorkbenchActive] = useState(false);
+
+  // Reset workbench state when selectedItem changes
+  useEffect(() => {
+    // Turn off workbench mode whenever a new module is selected
+    setIsWorkbenchActive(false);
+  }, [selectedItem]);
 
   // Handle install action
-  const handleInstall = () => {
-    if (selectedItem && !installedModules.includes(selectedItem.id)) {
-      installModule(selectedItem.id)
+  const handleInstall = useCallback(() => {
+    if (selectedItem && !isModuleInstalled(selectedItem.id)) {
+      installModule(selectedItem.id);
     }
-  }
+  }, [selectedItem, isModuleInstalled, installModule]);
 
-  const handleInstallMemo = useMemo(() => handleInstall, [selectedItem, installedModules, installModule])
-
-  // Determine which button to show based on state
-  const buttonProps = useMemo(() => {
-    switch (state) {
-      case "off":
-        return { label: "START", onClick: turnOn }
-      case "on":
-        return {
-          label: "POWER UP ↑",
-          onClick: activateSmartWallet,
-          className: "power-up-glow",
-        }
-      case "active":
-        return {
-          label: selectedItem
-            ? installedModules.includes(selectedItem.id)
-              ? "ALREADY INSTALLED"
-              : "INSTALL MODULE"
-            : "SELECT A MODULE",
-          onClick: handleInstallMemo,
-          disabled: !selectedItem || (selectedItem && installedModules.includes(selectedItem.id)),
-        }
+  // Handle uninstall action
+  const handleUninstall = useCallback(() => {
+    if (selectedItem && isModuleInstalled(selectedItem.id)) {
+      uninstallModule(selectedItem.id);
     }
-  }, [state, selectedItem, turnOn, activateSmartWallet, handleInstallMemo, installedModules])
+  }, [selectedItem, isModuleInstalled, uninstallModule]);
+
+  // Handle workbench toggle
+  const toggleWorkbench = useCallback(() => {
+    if (state === 'active' && selectedItem) {
+      setIsWorkbenchActive((prev) => !prev);
+    }
+  }, [state, selectedItem]);
 
   return (
     <div className="w-[900px] h-[600px] relative">
-      <TVFrame onPowerClick={togglePower} isPowered={state !== "off"}>
+      <TVFrame onPowerClick={togglePower} isPowered={state !== 'off'}>
         <div className="flex h-full">
           {/* Left side */}
-          <div className="w-1/3 p-4 flex flex-col items-center justify-between">
-            <CircularDisplay state={state} />
-            <div className="my-4 w-full h-64">
-              <ListDisplay items={AVAILABLE_MODULES} state={state} selectedItem={selectedItem} onSelectItem={selectItem} />
-            </div>
-            <ActionButton {...buttonProps} tvState={state} />
-          </div>
+          <TVSidebar
+            state={state}
+            items={DEFAULT_MODULES}
+            selectedItem={selectedItem}
+            isWorkbenchActive={isWorkbenchActive}
+            isModuleInstalled={isModuleInstalled}
+            onSelectItem={selectItem}
+            onTurnOn={turnOn}
+            onActivate={activate}
+            onInstall={handleInstall}
+            onUninstall={handleUninstall}
+            onWorkbenchToggle={toggleWorkbench}
+          />
 
           {/* Right side */}
-          <div className="w-2/3 p-4 h-full">
-            <DetailScreen state={state} selectedItem={selectedItem} />
-          </div>
+          <TVMainDisplay
+            state={state}
+            selectedItem={selectedItem}
+            isWorkbenchActive={isWorkbenchActive}
+          />
         </div>
       </TVFrame>
     </div>
-  )
+  );
 }
-

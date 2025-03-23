@@ -1,22 +1,32 @@
-import { Module } from "@/types";
+import type { Item } from '@/types';
 
-export const AVAILABLE_MODULES: Module[] = [
+/**
+ * Default modules available in the TV interface
+ */
+export const DEFAULT_MODULES: Item[] = [
   {
-    id: 'erc20-batch',
-    name: 'ERC20 Batch Transfer',
-    description: 'Enables batch transfer of ERC20 tokens in a single transaction',
-    contractAddress: '0x...' // You'll need to deploy and add the actual contract address
+    id: 1,
+    title: 'Social Recovery',
+    description: 'Restore access to your vault using trusted contacts.',
   },
   {
-    id: 'auto-swap',
-    name: 'Auto Swap',
-    description: 'Automatically swap tokens based on predefined rules',
-    contractAddress: '0x...' // You'll need to deploy and add the actual contract address
+    id: 2,
+    title: 'System Diagnostics',
+    description: 'Run a full system check on all components.',
   },
   {
-    id: 'recurring-payments',
-    name: 'Recurring Payments',
-    description: 'Set up automated recurring payments',
-    contractAddress: '0x...' // You'll need to deploy and add the actual contract address
-  }
-]; 
+    id: 3,
+    title: 'Radio Transmitter',
+    description: 'Broadcast emergency signals to nearby stations.',
+  },
+  {
+    id: 4,
+    title: 'Inventory Manager',
+    description: 'Check and organize your collected items.',
+  },
+];
+
+/**
+ * Local storage key for installed modules
+ */
+export const STORAGE_KEY = 'installedModules';

@@ -9,6 +9,7 @@ import {AccountCore} from "@openzeppelin/community-contracts/contracts/account/A
 import {PackedUserOperation} from "@openzeppelin/contracts/interfaces/draft-IERC4337.sol";
 import {Account} from "@openzeppelin/community-contracts/contracts/account/Account.sol";
 import {EIP712} from "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
+import "hardhat/console.sol";
 
 // Acknowledgements:
 // Source code extracted from OpenZeppelin: https://github.com/OpenZeppelin/openzeppelin-community-contracts
@@ -49,5 +50,9 @@ contract ModularAccount is Account, AccountERC7579, SignerERC7702 {
         returns (bool)
     {
         return SignerERC7702._rawSignatureValidation(hash, signature);
+    }
+
+    function getNumber() public pure returns (uint256) {
+        return 1;
     }
 }

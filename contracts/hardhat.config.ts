@@ -28,7 +28,7 @@ const config: HardhatUserConfig = {
     hardhat: {
       forking: {
         url: sepoliaRpcUrl,
-        blockNumber: 7500000,
+        enabled: true,
       },
     },
     // Add Sepolia network configuration

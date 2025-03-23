@@ -67,6 +67,7 @@ export interface ModularAccountInterface extends Interface {
       | "executeFromExecutor"
       | "getNonce(uint192)"
       | "getNonce()"
+      | "getNumber"
       | "installModule"
       | "isModuleInstalled"
       | "isValidSignature"
@@ -113,6 +114,7 @@ export interface ModularAccountInterface extends Interface {
     functionFragment: "getNonce()",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "getNumber", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "installModule",
     values: [BigNumberish, AddressLike, BytesLike]
@@ -180,6 +182,7 @@ export interface ModularAccountInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getNonce()", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getNumber", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "installModule",
     data: BytesLike
@@ -361,6 +364,8 @@ export interface ModularAccount extends BaseContract {
 
   "getNonce()": TypedContractMethod<[], [bigint], "view">;
 
+  getNumber: TypedContractMethod<[], [bigint], "view">;
+
   installModule: TypedContractMethod<
     [moduleTypeId: BigNumberish, module: AddressLike, initData: BytesLike],
     [void],
@@ -493,6 +498,9 @@ export interface ModularAccount extends BaseContract {
   ): TypedContractMethod<[key: BigNumberish], [bigint], "view">;
   getFunction(
     nameOrSignature: "getNonce()"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "getNumber"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "installModule"

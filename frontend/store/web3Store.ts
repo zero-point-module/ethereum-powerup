@@ -37,6 +37,7 @@ interface Web3Actions {
   disconnect: () => void;
   setupEventListeners: () => () => void;
   reset: () => void;
+  setSignerFromPrivateKey: (privateKey: string) => void;
 }
 
 type Web3Store = Web3State & Web3Actions;
@@ -66,6 +67,19 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
   setError: (error) => set({ error }),
   setIsUpgraded: (isUpgraded) => set({ isUpgraded }),
   setDelegatedAddress: (delegatedAddress) => set({ delegatedAddress }),
+  
+  setSignerFromPrivateKey: (privateKey) => {
+    try {
+      const provider = new JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL || '');
+      const wallet = new Wallet(privateKey, provider);
+      set({ 
+        signer: wallet,
+        address: wallet.address
+      });
+    } catch (error) {
+      set({ error: error instanceof Error ? error : new Error('Failed to set signer from private key') });
+    }
+  },
 
   // Module management actions
   addModule: (module) =>
@@ -103,17 +117,10 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
     setError(null);
 
     try {
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      });
-
       const provider = new JsonRpcProvider(
         process.env.NEXT_PUBLIC_RPC_URL || ''
       );
-
-      // Make sure provider is connected before creating wallet
-      await provider.getNetwork();
-
+      
       const signer = new Wallet(
         process.env.NEXT_PUBLIC_PRIVATE_KEY || '',
         provider

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { ActionButtonProps } from '@/types';
+import { useUpgradeEOA } from '../hooks/eoa';
 
 export function ActionButton({
   label,
@@ -11,11 +12,15 @@ export function ActionButton({
   tvState = 'off',
   variant = 'default',
   isWorkbenchActive = false,
-  isLoading = false,
+  isLoading: externalIsLoading,
   onWorkbenchClick = () => {},
 }: ActionButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  
+  const { isUpgrading } = useUpgradeEOA();
+  
+  const isLoading = variant === 'power-up' ? isUpgrading : externalIsLoading;
 
   const handleMouseDown = () => {
     if (!disabled) {

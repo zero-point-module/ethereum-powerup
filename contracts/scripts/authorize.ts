@@ -44,15 +44,17 @@ async function main() {
 
   try {
     const auth = await experimentalEoa.authorize({
-      // address: smartWallet,
-      address: experimentalEthers.ZeroAddress,
+      address: smartWallet,
+      //address: experimentalEthers.ZeroAddress,
     });
+    console.log('the signer', experimentalEoa.address, 'authorizing to', smartWallet);
 
-    console.log("Sending EIP-7702 transaction");
+    console.log("Sending EIP-7702 transaction with relayer", experimentalEoa2.address);
     const tx = await experimentalEoa2.sendTransaction({
       type: 4, // EIP-7702 transaction type
       to: experimentalEthers.ZeroAddress,
       authorizationList: [auth],
+      gasLimit: 1000000,
     });
     await tx.wait();
 

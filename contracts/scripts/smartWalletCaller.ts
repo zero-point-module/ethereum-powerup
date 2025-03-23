@@ -40,7 +40,9 @@ async function main() {
       experimentalEoa // Signing with the EOA pkey (acting as tx sender)
     );
       
-    c
+    // get account address
+    const accountAddress = await eoaSmartWallet.getAddress();
+    console.log("Account address", accountAddress);
 
     console.log("Sending EIP-7702 transaction");
 

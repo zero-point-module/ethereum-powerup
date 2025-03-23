@@ -22,28 +22,6 @@ export default function VintageTV() {
     setIsWorkbenchActive(false);
   }, [selectedItem]);
 
-  // Handle install action
-  const handleInstall = useCallback(() => {
-    if (
-      selectedItem &&
-      !installedModules.some((module) => module.id === selectedItem.id) &&
-      !isInstalling &&
-      !isUninstalling
-    ) {
-      install.mutate(selectedItem);
-    }
-  }, [selectedItem, installedModules, install]);
-
-  // Handle uninstall action
-  const handleUninstall = useCallback(() => {
-    if (
-      selectedItem &&
-      installedModules.some((module) => module.id === selectedItem.id)
-    ) {
-      uninstall.mutate(selectedItem.id);
-    }
-  }, [selectedItem, installedModules, uninstall]);
-
   // Handle workbench toggle
   const toggleWorkbench = useCallback(() => {
     if (state === 'active' && selectedItem) {
@@ -64,8 +42,6 @@ export default function VintageTV() {
             onSelectItem={selectItem}
             onTurnOn={turnOn}
             onActivate={activate}
-            onInstall={handleInstall}
-            onUninstall={handleUninstall}
             onWorkbenchToggle={toggleWorkbench}
           />
 

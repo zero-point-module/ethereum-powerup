@@ -8,7 +8,7 @@ export const DEFAULT_MODULES: Item[] = [
     id: 'social-recovery',
     name: 'Social Recovery',
     description: 'Restore access to your vault using trusted contacts.',
-    contractAddress: '0x0000000000000000000000000000000000000000',
+    contractAddress: '0x327fE3221BcfdD064Fd351303Ce02BF40CBE7EF7',
   },
   {
     id: 'system-diagnostics',

@@ -16,8 +16,6 @@ interface TVControlsProps {
   isWorkbenchActive: boolean;
   onTurnOn: () => void;
   onActivate: () => void;
-  onInstall: () => void;
-  onUninstall: () => void;
   onWorkbenchToggle: () => void;
 }
 
@@ -94,11 +92,11 @@ export function TVControls({
     }
 
     try {
+      await install.mutateAsync(selectedItem);
+
       // Optimistically add module to the installed list
       const { addModule } = useWeb3Store.getState();
       addModule(selectedItem);
-
-      await install.mutateAsync(selectedItem);
     } catch (error) {
       console.error('Error in install flow:', error);
 
@@ -114,13 +112,12 @@ export function TVControls({
     }
 
     try {
+      // Option 2: Direct access to mutation (comment out for testing)
+      await uninstall.mutateAsync(selectedItem.id);
+
       // Optimistically remove the module from the installed list
       const { removeModule } = useWeb3Store.getState();
       removeModule(selectedItem.id);
-
-      // Option 2: Direct access to mutation (comment out for testing)
-      // await uninstall.mutateAsync(selectedItem.id);
-
       console.log(`Successfully uninstalled module: ${selectedItem.name}`);
     } catch (error) {
       console.error('Error in uninstall flow:', error);

@@ -40,7 +40,7 @@ function ListDisplayComponent({
   return (
     <div className="w-full h-full relative">
       {/* Display frame */}
-      <div className="absolute inset-0 rounded-md border-4 border-gray-800 bg-gray-900 shadow-inner"></div>
+      <div className="absolute inset-0 rounded-md border-4 border-gray-800 bg-gray-900"></div>
 
       {/* Screen background - more authentic green with transition */}
       <div
@@ -50,7 +50,7 @@ function ListDisplayComponent({
           overflow-hidden
           ${
             state === 'off'
-              ? 'bg-gray-900 scale-95 opacity-70'
+              ? 'bg-gray-900 scale-100 opacity-70'
               : 'bg-[#001800] scale-100 opacity-100'
           }
           ${state === 'on' ? 'blur-[3px]' : ''}

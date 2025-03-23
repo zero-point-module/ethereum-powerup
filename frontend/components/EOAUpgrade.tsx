@@ -1,37 +1,42 @@
-import { useWeb3Store } from '../stores/web3Store';
-import { useEOAStatus, useUpgradeEOA, useSmartWallet, useNetwork } from '../hooks/eoa';
+import { useWeb3Store } from '../store/web3Store';
+import {
+  useEOAStatus,
+  useUpgradeEOA,
+  useSmartWallet,
+  useNetwork,
+} from '../hooks/eoa';
 import { Button } from './ui/button';
 import { CopyButton } from './ui/copy-button';
 
 export function EOAUpgrade() {
-  const { 
-    connect, 
-    disconnect, 
-    address, 
-    isConnecting, 
-    error: connectionError, 
+  const {
+    connect,
+    disconnect,
+    address,
+    isConnecting,
+    error: connectionError,
     isConnected,
-    chainId 
+    chainId,
   } = useWeb3Store();
-  
+
   const { data: status, isLoading: isLoadingStatus } = useEOAStatus();
-  const { 
-    upgradeEOA, 
-    isUpgrading, 
+  const {
+    upgradeEOA,
+    isUpgrading,
     error: upgradeError,
-    isReady: canUpgrade 
+    isReady: canUpgrade,
   } = useUpgradeEOA();
-  const { 
-    mutate: switchNetwork, 
+  const {
+    mutate: switchNetwork,
     isPending: isSwitching,
-    error: switchError 
+    error: switchError,
   } = useNetwork();
-  const { 
-    number, 
-    setNumber, 
+  const {
+    number,
+    setNumber,
     isLoading: isLoadingNumber,
     isSettingNumber,
-    isReady: smartWalletReady
+    isReady: smartWalletReady,
   } = useSmartWallet();
 
   const isSepoliaNetwork = chainId === 11155111;
@@ -39,17 +44,15 @@ export function EOAUpgrade() {
   // Handle connection errors
   if (connectionError) {
     return (
-      <div className="p-4 text-red-500">
-        Error: {connectionError.message}
-      </div>
+      <div className="p-4 text-red-500">Error: {connectionError.message}</div>
     );
   }
 
   // Handle wallet connection
   if (!isConnected) {
     return (
-      <Button 
-        onClick={() => connect()} 
+      <Button
+        onClick={() => connect()}
         disabled={isConnecting}
         className="w-full"
       >
@@ -99,9 +102,7 @@ export function EOAUpgrade() {
         <div>Loading account status...</div>
       ) : (
         <div className="space-y-4">
-          <div>
-            Status: {status?.isUpgraded ? 'Upgraded' : 'Not Upgraded'}
-          </div>
+          <div>Status: {status?.isUpgraded ? 'Upgraded' : 'Not Upgraded'}</div>
 
           {/* Upgrade Section */}
           {!status?.isUpgraded ? (
@@ -129,7 +130,8 @@ export function EOAUpgrade() {
                 )}
               </div>
               <div>
-                Current Number: {isLoadingNumber ? 'Loading...' : number?.toString()}
+                Current Number:{' '}
+                {isLoadingNumber ? 'Loading...' : number?.toString()}
               </div>
               <Button
                 onClick={() => setNumber.mutate(42)}
@@ -144,4 +146,4 @@ export function EOAUpgrade() {
       )}
     </div>
   );
-} 
+}

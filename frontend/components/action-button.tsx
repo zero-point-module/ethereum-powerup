@@ -11,6 +11,7 @@ export function ActionButton({
   tvState = 'off',
   variant = 'default',
   isWorkbenchActive = false,
+  isLoading = false,
   onWorkbenchClick = () => {},
 }: ActionButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
@@ -76,53 +77,80 @@ export function ActionButton({
 
   // Render button content based on variant
   const renderButtonContent = () => {
-    if (variant === 'power-up') {
-      return (
-        <div className="flex items-center justify-center">
-          <span className="font-bold">POWER UP</span>
-          <span className="arrow-bounce font-bold inline-flex items-center justify-center ml-1 relative top-[-1px]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+    switch (variant) {
+      case 'power-up':
+        return (
+          <div className="flex items-center justify-center">
+            <span className="font-bold">
+              {isLoading ? 'POWERING UP...' : 'POWER UP'}
+            </span>
+            <span
+              className={`arrow-bounce font-bold inline-flex items-center justify-center ml-1 relative top-[-1px] ${
+                isLoading ? 'animate-spin' : ''
+              }`}
             >
-              <path d="M12 19V5M5 12l7-7 7 7" />
-            </svg>
-          </span>
-        </div>
-      );
-    } else if (variant === 'install') {
-      return (
-        <div className="flex items-center justify-center">
-          <span>{label.replace(' MODULE', '')}</span>
-          <span className="ml-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-            </svg>
-          </span>
-        </div>
-      );
-    } else if (variant === 'uninstall') {
-      // We'll return null here because we'll handle the uninstall button differently
-      return null;
-    } else {
-      return <span>{label}</span>;
+              {isLoading ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 22c5.523 0 10-4.477 10-10h-4a6 6 0 01-6 6v4z" />
+                  <path d="M12 2C6.477 2 2 6.477 2 12h4a6 6 0 016-6V2z" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 19V5M5 12l7-7 7 7" />
+                </svg>
+              )}
+            </span>
+          </div>
+        );
+
+      case 'install':
+        return (
+          <div className="flex items-center justify-center">
+            <span>{label.replace(' MODULE', '')}</span>
+            <span className="ml-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+              </svg>
+            </span>
+          </div>
+        );
+
+      case 'uninstall':
+        // We handle the uninstall button differently
+        return null;
+
+      default:
+        return <span>{label}</span>;
     }
   };
 

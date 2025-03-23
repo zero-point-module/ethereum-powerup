@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useWeb3Store } from '../stores/web3Store';
+import { useWeb3Store } from '../store/web3Store';
 
 const queryClient = new QueryClient();
 
@@ -16,8 +16,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }, [setupEventListeners]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
-} 
+}

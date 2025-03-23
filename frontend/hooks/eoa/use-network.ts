@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useWeb3Store } from '../../stores/web3Store';
+import { useWeb3Store } from '../../store/web3Store';
 import { SEPOLIA_CHAIN_ID } from './constants';
 
 const SEPOLIA_PARAMS = {
@@ -68,7 +68,10 @@ export function useNetwork() {
             window.ethereum.on('chainChanged', handleNetworkChange);
             // Clean up on success or timeout
             setTimeout(() => {
-              window.ethereum?.removeListener('chainChanged', handleNetworkChange);
+              window.ethereum?.removeListener(
+                'chainChanged',
+                handleNetworkChange
+              );
             }, 10000);
           }
 
@@ -89,4 +92,4 @@ export function useNetwork() {
       console.error('Network switch error:', error);
     },
   });
-} 
+}

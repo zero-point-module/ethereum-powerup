@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ethers } from 'ethers';
 import { useWeb3Store } from '../../store/web3Store';
 import { SMART_WALLET_ABI } from '../../constants/SmartWalletABI';
-import type { Item } from '../../types/index';
+import type { Item } from '../../types/index';´
 import ModularAccount from '../../constants/ModularAccount.json';
 
 export function useModules() {

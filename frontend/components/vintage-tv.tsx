@@ -7,12 +7,12 @@ import { TVMainDisplay } from './tv-main-display';
 import { useTVStore } from '@/store/tv-store';
 import { DEFAULT_MODULES } from '@/constants';
 import { useModules } from '@/hooks/eoa/use-modules';
+import { useWeb3Store } from '@/store/web3Store';
+
 export default function VintageTV() {
   // Get state and actions from Zustand stores
-  const { state, selectedItem, turnOn, activate, togglePower, selectItem } =
-    useTVStore();
-
-  const { installedModules, install, uninstall } = useModules();
+  const { state, selectedItem, turnOn, activate, selectItem } = useTVStore();
+  const { connect } = useWeb3Store();
 
   const [isWorkbenchActive, setIsWorkbenchActive] = useState(false);
 
@@ -21,26 +21,6 @@ export default function VintageTV() {
     // Turn off workbench mode whenever a new module is selected
     setIsWorkbenchActive(false);
   }, [selectedItem]);
-
-  // Handle install action
-  const handleInstall = useCallback(() => {
-    if (
-      selectedItem &&
-      !installedModules.some((module) => module.id === selectedItem.id)
-    ) {
-      install.mutate(selectedItem);
-    }
-  }, [selectedItem, installedModules, install]);
-
-  // Handle uninstall action
-  const handleUninstall = useCallback(() => {
-    if (
-      selectedItem &&
-      installedModules.some((module) => module.id === selectedItem.id)
-    ) {
-      uninstall.mutate(selectedItem.id);
-    }
-  }, [selectedItem, installedModules, uninstall]);
 
   // Handle workbench toggle
   const toggleWorkbench = useCallback(() => {
@@ -51,7 +31,7 @@ export default function VintageTV() {
 
   return (
     <div className="w-[900px] h-[600px] relative">
-      <TVFrame onPowerClick={togglePower} isPowered={state !== 'off'}>
+      <TVFrame>
         <div className="flex h-full">
           {/* Left side */}
           <TVSidebar
@@ -60,10 +40,11 @@ export default function VintageTV() {
             selectedItem={selectedItem}
             isWorkbenchActive={isWorkbenchActive}
             onSelectItem={selectItem}
-            onTurnOn={turnOn}
+            onTurnOn={() => {
+              connect();
+              turnOn();
+            }}
             onActivate={activate}
-            onInstall={handleInstall}
-            onUninstall={handleUninstall}
             onWorkbenchToggle={toggleWorkbench}
           />
 

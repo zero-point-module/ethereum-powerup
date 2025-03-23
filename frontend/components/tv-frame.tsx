@@ -2,7 +2,7 @@
 
 import type { TVFrameProps } from '@/types';
 
-export function TVFrame({ children, onPowerClick, isPowered }: TVFrameProps) {
+export function TVFrame({ children }: TVFrameProps) {
   return (
     <div className="w-full h-full relative">
       {/* Outer frame with texture */}
@@ -28,29 +28,6 @@ export function TVFrame({ children, onPowerClick, isPowered }: TVFrameProps) {
 
       {/* Decorative elements */}
       <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1/3 h-4 bg-gray-800 rounded-b-xl"></div>
-
-      {/* Power button - orange like in the image */}
-      <button
-        onClick={onPowerClick}
-        className={`
-          absolute -bottom-1 right-8 w-6 h-6 
-          ${isPowered ? 'bg-orange-600' : 'bg-orange-800'} 
-          rounded-sm border-2 border-gray-700 shadow-md
-          transition-colors duration-200
-          hover:bg-orange-500 active:bg-orange-700
-          focus:outline-none focus:ring-2 focus:ring-orange-400
-        `}
-        aria-label="Power button"
-      ></button>
-
-      {/* Power indicator light */}
-      <div
-        className={`
-        absolute -bottom-1 right-16 w-2 h-2 rounded-full 
-        transition-colors duration-300
-        ${isPowered ? 'bg-green-500' : 'bg-gray-700'}
-      `}
-      ></div>
 
       {/* Ventilation slots */}
       <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 flex space-x-1">

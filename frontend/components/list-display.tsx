@@ -13,14 +13,15 @@ function ListDisplayComponent({
 }: ListDisplayProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOnlyInstalled, setShowOnlyInstalled] = useState(false);
-  const { installedModules } = useModules();
+  const { installedModules, isInstalling, isUninstalling } = useModules();
 
   // Filter items based on search query and installation status
   const filteredItems = items.filter((item) => {
     const matchesSearch = item.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchesInstalled = !showOnlyInstalled || installedModules.includes(item);
+    const matchesInstalled =
+      !showOnlyInstalled || installedModules.includes(item);
     return matchesSearch && matchesInstalled;
   });
 
@@ -39,7 +40,7 @@ function ListDisplayComponent({
   return (
     <div className="w-full h-full relative">
       {/* Display frame */}
-      <div className="absolute inset-0 rounded-md border-4 border-gray-800 bg-gray-900 shadow-inner"></div>
+      <div className="absolute inset-0 rounded-md border-4 border-gray-800 bg-gray-900"></div>
 
       {/* Screen background - more authentic green with transition */}
       <div
@@ -49,7 +50,7 @@ function ListDisplayComponent({
           overflow-hidden
           ${
             state === 'off'
-              ? 'bg-gray-900 scale-95 opacity-70'
+              ? 'bg-gray-900 scale-100 opacity-70'
               : 'bg-[#001800] scale-100 opacity-100'
           }
           ${state === 'on' ? 'blur-[3px]' : ''}
@@ -117,7 +118,7 @@ function ListDisplayComponent({
                 }
                 disabled={state !== 'active'}
               >
-                <span className="text-[#00ff00] font-mono text-xs">
+                <span className="text-[#00ff00] font-mono text-lg">
                   {showOnlyInstalled ? '✓' : '⚙'}
                 </span>
               </button>
@@ -131,6 +132,7 @@ function ListDisplayComponent({
                 state={state}
                 isSelected={selectedItem?.id === item.id}
                 isInstalled={installedModules.includes(item)}
+                isDisabled={isInstalling || isUninstalling}
                 onSelect={() => state === 'active' && onSelectItem(item)}
               />
             ))}
@@ -158,10 +160,11 @@ function ListDisplayComponent({
 
 // Memoized list item component to prevent unnecessary re-renders
 interface ListItemProps {
-  item: Item
+  item: Item;
   state: 'off' | 'on' | 'active';
   isSelected: boolean;
   isInstalled: boolean;
+  isDisabled: boolean;
   onSelect: () => void;
 }
 
@@ -170,6 +173,7 @@ const ListItem = memo(function ListItem({
   state,
   isSelected,
   isInstalled,
+  isDisabled,
   onSelect,
 }: ListItemProps) {
   return (
@@ -179,7 +183,7 @@ const ListItem = memo(function ListItem({
         transition-all duration-200 transform
         h-10 min-h-[40px] relative overflow-visible
         ${
-          state === 'active'
+          state === 'active' && !isDisabled
             ? 'cursor-pointer hover:scale-[1.02]'
             : 'cursor-not-allowed opacity-70'
         }
@@ -194,7 +198,7 @@ const ListItem = memo(function ListItem({
       title={isSelected ? 'Click to deselect' : item.name}
     >
       {/* Installation indicator - positioned absolutely to avoid affecting layout */}
-      {isInstalled && (
+      {isInstalled && !isDisabled && (
         <div className="absolute left-[-10px] top-1/2 transform -translate-y-1/2 w-4 h-4 bg-[#00ff00] rounded-full flex items-center justify-center text-black text-xs font-bold z-10">
           ✓
         </div>

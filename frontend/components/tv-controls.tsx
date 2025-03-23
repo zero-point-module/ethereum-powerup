@@ -1,16 +1,21 @@
-import { useMemo } from 'react';
-import { ActionButton } from './action-button';
+import { useEffect, useState } from 'react';
 import type { Item, TVState } from '@/types';
-import { useUpgradeEOA, useEOAStatus } from '@/hooks/eoa';
-import { useModules } from '@/hooks/eoa/use-modules';
+import { useUpgradeEOA, useEOAStatus, grrrrrrrrrrrrrrr } from '../hooks/eoa';
+import { useModules } from '../hooks/eoa/use-modules';
+import { useWeb3Store } from '../store/web3Store';
+import {
+  PowerUpButton,
+  InstallButton,
+  UninstallButton,
+  BaseButton,
+} from './buttons';
+
 interface TVControlsProps {
   state: TVState;
   selectedItem: Item | null;
   isWorkbenchActive: boolean;
   onTurnOn: () => void;
   onActivate: () => void;
-  onInstall: () => void;
-  onUninstall: () => void;
   onWorkbenchToggle: () => void;
 }
 
@@ -20,108 +25,255 @@ export function TVControls({
   isWorkbenchActive,
   onTurnOn,
   onActivate,
-  onInstall,
-  onUninstall,
   onWorkbenchToggle,
 }: TVControlsProps) {
-  // Use the hook for EIP7702 transactions
-  const { upgradeEOA, isUpgrading, isReady: canUpgrade } = useUpgradeEOA();
+  // All state management happens here in the parent
+  const [isCheckingCondition, setIsCheckingCondition] = useState(true); // Start with true to prevent flickering
+  const [isLoadingModules, setIsLoadingModules] = useState(true); // Start with true to prevent flickering
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+
+  // Get the upgrade status via hooks
+  const { upgradeEOAAsync, isUpgrading, isReady: canUpgrade } = useUpgradeEOA();
   const { data: eoaStatus, isLoading: isCheckingStatus } = useEOAStatus();
-  const { installedModules } = useModules();
+  const { install, uninstall, installedModules, isInstalling, isUninstalling } =
+    useModules();
 
   // Check if wallet is already upgraded
   const isUpgraded = eoaStatus?.isUpgraded || false;
 
-  // Get the current selected module's installation status
+  // Initial loading state - will run only once when component mounts
+  useEffect(() => {
+    // Set initial load complete after a delay
+    const timer = setTimeout(() => {
+      setInitialLoadComplete(true);
+
+      // Only reset checking states if we're not in a loading phase
+      if (!isCheckingStatus) {
+        setIsCheckingCondition(false);
+        setIsLoadingModules(false);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [isCheckingStatus]);
+
+  // Check if module is installed
+  const isModuleInstalled = (moduleId: string) => {
+    return installedModules.some((module) => module.id === moduleId);
+  };
+
+  // Check if current selected module is installed
   const isCurrentModuleInstalled = selectedItem
-    ? installedModules.some((module) => module.id === selectedItem.id)
+    ? isModuleInstalled(selectedItem.id)
     : false;
 
-  // Determine which button to show based on state and module installation status
-  const buttonProps = useMemo(() => {
-    switch (state) {
-      case 'off':
-        return {
-          label: 'CONNECT WALLET',
-          onClick: onTurnOn,
-          variant: 'default' as const,
-        };
-      case 'on':
-        // If wallet is already upgraded, show a different button or skip to active state
-        if (isUpgraded) {
-          // Automatically transition to active state
-          setTimeout(() => onActivate(), 0);
-          
-          return {
-            label: 'ALREADY POWERED UP',
-            onClick: onActivate,
-            variant: 'default' as const,
-            disabled: true,
-          };
-        }
-        
-        return {
-          label: 'POWER UP ↑',
-          onClick: () => {
-            // First update the UI state
-            onActivate();
+  // Handlers with loading state management
+  const handlePowerUp = async () => {
+    try {
+      // Use mutateAsync for proper promise handling
+      await upgradeEOAAsync(undefined, {
+        onSuccess: () => {
+          console.log('Power-up transaction successful');
+          // Only activate after successful completion
+          onActivate();
+        },
+        onError: (error) =>
+          console.error('Power-up transaction failed:', error),
+      });
+    } catch (error) {
+      console.error('Error in power-up flow:', error);
+    }
+  };
 
-            // Call the mutate function correctly
-            // The empty object is passed to match the mutate function's expected parameters
-            upgradeEOA(undefined, {
-              onSuccess: () => console.log('Upgrade completed successfully'),
-              onError: (error) => console.error('Upgrade failed:', error),
-            });
-          },
-          variant: 'power-up' as const,
-          isLoading: isUpgrading || isCheckingStatus,
-          disabled: !canUpgrade || isCheckingStatus,
-        };
-      case 'active':
-        // If no item is selected
-        if (!selectedItem) {
-          return {
-            label: 'SELECT A MODULE',
-            onClick: () => {},
-            disabled: true,
-            variant: 'default' as const,
-          };
-        }
+  const handleInstall = async () => {
+    if (!selectedItem) {
+      console.error('No item selected');
+      return;
+    }
 
-        // If selected item is installed, show uninstall button
-        if (isCurrentModuleInstalled) {
-          return {
-            label: 'UNINSTALL MODULE',
-            onClick: onUninstall,
-            variant: 'uninstall' as const,
-            isWorkbenchActive,
-            onWorkbenchClick: onWorkbenchToggle,
-          };
-        }
+    try {
+      const code = await install.mutateAsync(selectedItem);
+      const { addModule } = useWeb3Store.getState();
 
-        // Otherwise, show install button
-        return {
-          label: 'INSTALL MODULE',
-          onClick: onInstall,
-          variant: 'install' as const,
-        };
+      if (code === grrrrrrrrrrrrrrr) {
+        console.log('Module already installed');
+        addModule(selectedItem);
+        return;
+      }
+
+      // Optimistically add module to the installed list
+
+      addModule(selectedItem);
+    } catch (error) {
+      console.error('Error in install flow:', error);
+
+      const { removeModule } = useWeb3Store.getState();
+      removeModule(selectedItem.id);
+    }
+  };
+
+  const handleUninstall = async () => {
+    if (!selectedItem) {
+      console.error('No item selected');
+      return;
+    }
+
+    try {
+      // Option 2: Direct access to mutation (comment out for testing)
+      await uninstall.mutateAsync(selectedItem.id);
+
+      // Optimistically remove the module from the installed list
+      const { removeModule } = useWeb3Store.getState();
+      removeModule(selectedItem.id);
+      console.log(`Successfully uninstalled module: ${selectedItem.name}`);
+    } catch (error) {
+      console.error('Error in uninstall flow:', error);
+
+      // Rollback optimistic update on error
+      const { addModule } = useWeb3Store.getState();
+      addModule(selectedItem);
+    }
+  };
+
+  // Simulate checking and loading modules when state changes
+  useEffect(() => {
+    if (state === 'on') {
+      setIsCheckingCondition(true);
+      const timer = setTimeout(() => {
+        setIsCheckingCondition(false);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+
+    if (state === 'active') {
+      setIsLoadingModules(true);
+      const timer = setTimeout(() => {
+        setIsLoadingModules(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [state]);
+
+  // If wallet is already upgraded and in 'on' state, automatically transition to 'active'
+  useEffect(() => {
+    // Only auto-transition after initial loading is complete
+    if (
+      state === 'on' &&
+      isUpgraded &&
+      !isCheckingStatus &&
+      !isCheckingCondition &&
+      initialLoadComplete
+    ) {
+      onActivate();
     }
   }, [
     state,
-    selectedItem,
-    isCurrentModuleInstalled,
-    onTurnOn,
-    onActivate,
-    upgradeEOA,
-    isUpgrading,
-    canUpgrade,
-    onInstall,
-    onUninstall,
-    isWorkbenchActive,
-    onWorkbenchToggle,
     isUpgraded,
     isCheckingStatus,
+    isCheckingCondition,
+    onActivate,
+    initialLoadComplete,
   ]);
 
-  return <ActionButton {...buttonProps} tvState={state} />;
+  // 1. Default START button (when TV is off)
+  if (state === 'off') {
+    return <BaseButton label="START" onClick={onTurnOn} tvState={state} />;
+  }
+
+  if (state === 'on') {
+    // 2. First show loader while checking condition
+    if (isCheckingCondition || isCheckingStatus || !initialLoadComplete) {
+      return (
+        <BaseButton
+          label="CHECKING STATUS"
+          onClick={() => {}}
+          disabled={true}
+          tvState={state}
+          isLoading={true}
+        />
+      );
+    }
+
+    // 3. If condition is valid (wallet is upgraded), show appropriate message
+    if (isUpgraded) {
+      return (
+        <BaseButton
+          label="READY TO ACTIVATE"
+          onClick={onActivate}
+          tvState={state}
+        />
+      );
+    }
+
+    // 4. If condition is not valid, show power up button
+    return (
+      <PowerUpButton
+        onClick={handlePowerUp}
+        tvState={state}
+        isLoading={isUpgrading}
+        disabled={!canUpgrade}
+      />
+    );
+  }
+
+  if (state === 'active') {
+    // First show loader while checking module status
+    // if (isLoadingModules || !initialLoadComplete) {
+    //   return (
+    //     <BaseButton
+    //       label="CHECKING MODULES"
+    //       onClick={() => {}}
+    //       disabled={true}
+    //       tvState={state}
+    //       isLoading={true}
+    //     />
+    //   );
+    // }
+
+    // If no module is selected
+    if (!selectedItem) {
+      return (
+        <BaseButton
+          label="SELECT A MODULE"
+          onClick={() => {}}
+          disabled={true}
+          tvState={state}
+        />
+      );
+    }
+
+    // If module is already installed, show uninstall button
+    if (isCurrentModuleInstalled) {
+      return (
+        <UninstallButton
+          onClick={handleUninstall}
+          tvState={state}
+          isLoading={isUninstalling}
+          selectedItem={selectedItem}
+          isWorkbenchActive={isWorkbenchActive}
+          onWorkbenchClick={onWorkbenchToggle}
+        />
+      );
+    }
+
+    // Otherwise, show install button
+    return (
+      <InstallButton
+        onClick={handleInstall}
+        tvState={state}
+        isLoading={isInstalling}
+        selectedItem={selectedItem}
+      />
+    );
+  }
+
+  // Default fallback (shouldn't happen, but good to have)
+  return (
+    <BaseButton
+      label="LOADING..."
+      onClick={() => {}}
+      disabled={true}
+      tvState={state}
+    />
+  );
 }

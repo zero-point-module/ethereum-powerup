@@ -1,6 +1,9 @@
 import { create } from 'zustand';
-import { JsonRpcProvider, JsonRpcSigner, Wallet } from 'ethers';
+import { JsonRpcProvider, JsonRpcSigner, Wallet, ethers } from 'ethers';
 import type { Item } from '../types/index';
+import { DEFAULT_MODULES } from '../constants/modules';
+import ModularAccountJson from '../constants/ModularAccount.json';
+import { ModularAccount } from '../types/ModularAccount';
 
 interface Web3State {
   provider: JsonRpcProvider | null;
@@ -35,11 +38,14 @@ interface Web3Actions {
   removeModule: (moduleId: string) => void;
   connect: () => Promise<void>;
   disconnect: () => void;
-  setupEventListeners: () => () => void;
   reset: () => void;
+  setSignerFromPrivateKey: (privateKey: string) => void;
+  loadInstalledModules: () => Promise<void>;
 }
 
 type Web3Store = Web3State & Web3Actions;
+
+const MODULE_TYPE_EXECUTOR = 2;
 
 export const useWeb3Store = create<Web3Store>((set, get) => ({
   // State
@@ -66,6 +72,22 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
   setError: (error) => set({ error }),
   setIsUpgraded: (isUpgraded) => set({ isUpgraded }),
   setDelegatedAddress: (delegatedAddress) => set({ delegatedAddress }),
+  
+  setSignerFromPrivateKey: (privateKey) => {
+    try {
+      const provider = new JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL || '');
+      const wallet = new Wallet(privateKey, provider);
+      set({ 
+        signer: wallet,
+        address: wallet.address
+      });
+      
+      // Load installed modules after changing signer
+      get().loadInstalledModules();
+    } catch (error) {
+      set({ error: error instanceof Error ? error : new Error('Failed to set signer from private key') });
+    }
+  },
 
   // Module management actions
   addModule: (module) =>
@@ -91,29 +113,61 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
       installedModules: [],
     }),
 
-  connect: async () => {
-    const { setIsConnecting, setError, reset } = get();
-
-    if (!window.ethereum) {
-      setError(new Error('MetaMask is not installed'));
+  // Add loadInstalledModules function
+  loadInstalledModules: async () => {
+    const { signer, address } = get();
+    
+    if (!signer || !address) {
       return;
     }
+    
+    try {
+      const smartWallet = new ethers.Contract(
+        address,
+        ModularAccountJson.abi,
+        signer
+      ) as any as ModularAccount;
+      
+      const installedModules: Item[] = [];
+      
+      // Check each module from DEFAULT_MODULES
+      for (const module of DEFAULT_MODULES) {
+        try {
+          if (module.contractAddress === '0x0000000000000000000000000000000000000000') {
+            continue; // Skip modules with zero address
+          }
+          
+          const isInstalled = await smartWallet.isModuleInstalled(
+            MODULE_TYPE_EXECUTOR,
+            module.contractAddress,
+            ethers.AbiCoder.defaultAbiCoder().encode(['bytes'], ['0x'])
+          );
+          
+          if (isInstalled) {
+            installedModules.push(module);
+          }
+        } catch (error) {
+          console.error(`Error checking module ${module.id}:`, error);
+        }
+      }
+      
+      set({ installedModules });
+    } catch (error) {
+      console.error('Error loading installed modules:', error);
+    }
+  },
+
+  connect: async () => {
+    const { setIsConnecting, setError, reset, loadInstalledModules } = get();
 
     setIsConnecting(true);
     setError(null);
 
     try {
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      });
-
       const provider = new JsonRpcProvider(
         process.env.NEXT_PUBLIC_RPC_URL || ''
       );
-
-      // Make sure provider is connected before creating wallet
-      await provider.getNetwork();
-
+      
       const signer = new Wallet(
         process.env.NEXT_PUBLIC_PRIVATE_KEY || '',
         provider
@@ -122,7 +176,7 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
 
       // Create Relayer with the same provider
       const relayerProvider = new JsonRpcProvider(
-        window.ethereum.rpcUrls?.default?.at(0) ||
+        window.ethereum?.rpcUrls?.default?.at(0) ||
           process.env.NEXT_PUBLIC_RPC_URL ||
           ''
       );
@@ -144,6 +198,9 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
         isConnected: true,
         error: null,
       });
+      
+      // Load installed modules after setting signer and address
+      await loadInstalledModules();
     } catch (error) {
       reset();
       setError(error instanceof Error ? error : new Error('Failed to connect'));
@@ -154,49 +211,5 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
 
   disconnect: () => {
     get().reset();
-  },
-
-  setupEventListeners: () => {
-    const { connect, disconnect, setAddress, setChainId } = get();
-
-    if (window.ethereum) {
-      // Setup event listeners
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
-        if (accounts.length === 0) {
-          disconnect();
-        } else {
-          setAddress(accounts[0]);
-        }
-      });
-
-      window.ethereum.on('chainChanged', (newChainId: string) => {
-        setChainId(Number(newChainId));
-      });
-
-      window.ethereum.on('disconnect', () => {
-        disconnect();
-      });
-
-      // Check if already connected
-      window.ethereum
-        .request({ method: 'eth_accounts' })
-        .then((accounts: string[]) => {
-          if (accounts.length > 0) {
-            connect();
-          }
-        })
-        .catch((err: unknown) => {
-          console.error('Failed to check accounts:', err);
-        });
-    }
-
-    // Return cleanup function
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', () => {});
-        window.ethereum.removeListener('chainChanged', () => {});
-        window.ethereum.removeListener('disconnect', () => {});
-      }
-    };
   },
 }));

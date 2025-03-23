@@ -45,6 +45,4 @@ export interface ActionButtonProps {
 
 export interface TVFrameProps {
   children: React.ReactNode;
-  onPowerClick: () => void;
-  isPowered: boolean;
 }

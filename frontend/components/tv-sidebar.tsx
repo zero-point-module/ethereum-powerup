@@ -11,8 +11,6 @@ interface TVSidebarProps {
   onSelectItem: (item: Item) => void;
   onTurnOn: () => void;
   onActivate: () => void;
-  onInstall: () => void;
-  onUninstall: () => void;
   onWorkbenchToggle: () => void;
 }
 
@@ -24,8 +22,6 @@ export function TVSidebar({
   onSelectItem,
   onTurnOn,
   onActivate,
-  onInstall,
-  onUninstall,
   onWorkbenchToggle,
 }: TVSidebarProps) {
   return (
@@ -45,8 +41,6 @@ export function TVSidebar({
         isWorkbenchActive={isWorkbenchActive}
         onTurnOn={onTurnOn}
         onActivate={onActivate}
-        onInstall={onInstall}
-        onUninstall={onUninstall}
         onWorkbenchToggle={onWorkbenchToggle}
       />
     </div>

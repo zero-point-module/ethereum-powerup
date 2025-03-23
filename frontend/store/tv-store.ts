@@ -79,6 +79,7 @@ export const useTVStore = create<TVStore>((set, get) => ({
 
       // Default to off if not connected
       if (!isConnected || !provider || !address) {
+        console.log('TV Store - Wallet not connected, turning off');
         set({ state: 'off', isInitialized: true });
         return;
       }
@@ -86,28 +87,41 @@ export const useTVStore = create<TVStore>((set, get) => ({
       // Check if on correct network (Sepolia)
       const isSepoliaNetwork = chainId === SEPOLIA_CHAIN_ID;
       if (!isSepoliaNetwork) {
+        console.log('TV Store - Not on Sepolia network, turning off');
         set({ state: 'off', isInitialized: true });
         return;
       }
 
-      // Check EOA status directly from provider
-      const code = await provider.getCode(address);
-      const hasPoweredUp = code !== '0x';
-      
-      console.log('TV Store - Wallet status:', { 
-        address,
-        hasPoweredUp,
-        isUpgraded: web3Store.isUpgraded,
-        codeLength: code.length
-      });
-      
-      // Set TV state based on upgrade status
-      if (hasPoweredUp || isUpgraded) {
-        // Wallet is upgraded, turn TV on and activate
-        set({ state: 'active', isInitialized: true });
-      } else {
-        // Wallet is connected but not upgraded, just turn on
-        set({ state: 'on', isInitialized: true });
+      try {
+        // Check EOA status directly from provider
+        const code = await provider.getCode(address);
+        const hasPoweredUp = code !== '0x';
+        
+        console.log('TV Store - Wallet status:', { 
+          address,
+          hasPoweredUp,
+          isUpgraded: web3Store.isUpgraded,
+          codeLength: code.length
+        });
+        
+        // Set TV state based on upgrade status
+        if (hasPoweredUp || isUpgraded) {
+          console.log('TV Store - Wallet is upgraded, activating TV');
+          // Wallet is upgraded, turn TV on and activate
+          set({ state: 'active', isInitialized: true });
+        } else {
+          console.log('TV Store - Wallet is connected but not upgraded, turning on TV');
+          // Wallet is connected but not upgraded, just turn on
+          set({ state: 'on', isInitialized: true });
+        }
+      } catch (error) {
+        console.error('Error checking wallet code:', error);
+        // If error checking code, fall back to stored state
+        if (isUpgraded) {
+          set({ state: 'active', isInitialized: true });
+        } else {
+          set({ state: 'on', isInitialized: true });
+        }
       }
     } catch (error) {
       console.error('Failed to initialize TV from wallet:', error);

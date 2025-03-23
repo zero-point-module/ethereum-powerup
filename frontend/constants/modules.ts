@@ -5,24 +5,28 @@ import type { Item } from '@/types';
  */
 export const DEFAULT_MODULES: Item[] = [
   {
-    id: 1,
-    title: 'Social Recovery',
+    id: 'social-recovery',
+    name: 'Social Recovery',
     description: 'Restore access to your vault using trusted contacts.',
+    contractAddress: '0x0000000000000000000000000000000000000000',
   },
   {
-    id: 2,
-    title: 'System Diagnostics',
+    id: 'system-diagnostics',
+    name: 'System Diagnostics',
     description: 'Run a full system check on all components.',
+    contractAddress: '0x0000000000000000000000000000000000000000',
   },
   {
-    id: 3,
-    title: 'Radio Transmitter',
+    id: 'radio-transmitter',
+    name: 'Radio Transmitter',
     description: 'Broadcast emergency signals to nearby stations.',
+    contractAddress: '0x0000000000000000000000000000000000000000',
   },
   {
-    id: 4,
-    title: 'Inventory Manager',
+    id: 'inventory-manager',
+    name: 'Inventory Manager',
     description: 'Check and organize your collected items.',
+    contractAddress: '0x0000000000000000000000000000000000000000',
   },
 ];
 

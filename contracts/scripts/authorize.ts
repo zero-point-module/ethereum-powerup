@@ -16,9 +16,9 @@ async function main() {
     throw new Error("PRIVATE_KEY is not set");
   }
 
-  const privateKey2 = process.env.PRIVATE_KEY_2;
+  const privateKey2 = process.env.PRIVATE_KEY_RELAYER;
   if (!privateKey2) {
-    throw new Error("PRIVATE_KEY_2 is not set");
+    throw new Error("PRIVATE_KEY_RELAYER is not set");
   }
 
   const smartWallet = process.env.SMART_WALLET;

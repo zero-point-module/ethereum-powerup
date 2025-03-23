@@ -18,7 +18,7 @@ contract ERC7579HookMock is IERC7579Hook {
     function onUninstall(bytes calldata data) public virtual {
         emit ModuleUninstalledReceived(msg.sender, data);
     }
-
+    
     function isModuleType(uint256 moduleTypeId) external pure returns (bool) {
         return moduleTypeId == MODULE_TYPE_HOOK;
     }

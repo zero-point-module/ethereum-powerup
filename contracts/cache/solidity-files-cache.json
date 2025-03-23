@@ -1,10 +1,10 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/contracts/Counter.sol": {
-      "lastModificationDate": 1742679436001,
-      "contentHash": "c424f46c5e2d539a46b2c4867787fc0c",
-      "sourceName": "contracts/Counter.sol",
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/hardhat@2.22.19_ts-node@10.9.2_@types+node@22.13.11_typescript@5.8.2__typescript@5.8.2/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1742678517423,
+      "contentHash": "681c532e816169606d13a5fe8b475074",
+      "sourceName": "hardhat/console.sol",
       "solcConfig": {
         "version": "0.8.28",
         "settings": {
@@ -20,102 +20,28 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.0"
+        ">=0.4.22 <0.9.0"
       ],
       "artifacts": [
-        "Counter"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/contracts/CounterModule.sol": {
-      "lastModificationDate": 1742679896891,
-      "contentHash": "24b0aff9c4d2cb976dc0a125996b7c1d",
-      "sourceName": "contracts/CounterModule.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/interfaces/draft-IERC7579.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "CounterModule"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/interfaces/draft-IERC7579.sol": {
-      "lastModificationDate": 1742678703986,
-      "contentHash": "59b66efd434ab849597739fa9b9f3c77",
-      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC7579.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./draft-IERC4337.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC7579AccountConfig",
-        "IERC7579Execution",
-        "IERC7579Hook",
-        "IERC7579Module",
-        "IERC7579ModuleConfig",
-        "IERC7579Validator"
+        "console"
       ]
     },
     "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/interfaces/draft-IERC4337.sol": {
@@ -129,7 +55,7 @@
             "enabled": true,
             "runs": 200
           },
-          "evmVersion": "cancun",
+          "evmVersion": "berlin",
           "outputSelection": {
             "*": {
               "*": [
@@ -137,12 +63,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -160,10 +93,57 @@
         "IPaymaster"
       ]
     },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol": {
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/account/AccountCore.sol": {
+      "lastModificationDate": 1742678519809,
+      "contentHash": "6874dc9fe32e7fb8faaf4899efdb8f4e",
+      "sourceName": "@openzeppelin/community-contracts/contracts/account/AccountCore.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "cancun",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/interfaces/draft-IERC4337.sol",
+        "@openzeppelin/contracts/account/utils/draft-ERC4337Utils.sol",
+        "../utils/cryptography/AbstractSigner.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "AccountCore"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/cryptography/EIP712.sol": {
       "lastModificationDate": 1742678703986,
-      "contentHash": "05e881bd93a9766a79f3509f180716e9",
-      "sourceName": "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol",
+      "contentHash": "f95aaf36e1bc466a16f8c28c02b2faad",
+      "sourceName": "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
       "solcConfig": {
         "version": "0.8.28",
         "settings": {
@@ -171,7 +151,7 @@
             "enabled": true,
             "runs": 200
           },
-          "evmVersion": "cancun",
+          "evmVersion": "berlin",
           "outputSelection": {
             "*": {
               "*": [
@@ -179,31 +159,38 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
       "imports": [
-        "../../interfaces/draft-IERC7579.sol",
-        "../../utils/Packing.sol",
-        "../../utils/Address.sol"
+        "./MessageHashUtils.sol",
+        "../ShortStrings.sol",
+        "../../interfaces/IERC5267.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "ERC7579Utils"
+        "EIP712"
       ]
     },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Packing.sol": {
-      "lastModificationDate": 1742678703999,
-      "contentHash": "9e4428b3aef2511dccf875e291c56440",
-      "sourceName": "@openzeppelin/contracts/utils/Packing.sol",
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/account/Account.sol": {
+      "lastModificationDate": 1742678519803,
+      "contentHash": "bbd516f6c6524037c6e614c9ef368754",
+      "sourceName": "@openzeppelin/community-contracts/contracts/account/Account.sol",
       "solcConfig": {
         "version": "0.8.28",
         "settings": {
@@ -219,95 +206,34 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Packing"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1742678703984,
-      "contentHash": "5b9a49c25d7edbc48ffcbd2c7e8a40ef",
-      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
           },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
       "imports": [
-        "./Errors.sol"
+        "@openzeppelin/contracts/interfaces/draft-IERC4337.sol",
+        "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol",
+        "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol",
+        "../utils/cryptography/ERC7739.sol",
+        "./AccountCore.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "Address"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Errors.sol": {
-      "lastModificationDate": 1742678703991,
-      "contentHash": "6b5eac2b85500c3012977849cfd633d8",
-      "sourceName": "@openzeppelin/contracts/utils/Errors.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Errors"
+        "Account"
       ]
     },
     "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/account/extensions/AccountERC7579.sol": {
@@ -329,12 +255,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -357,194 +290,6 @@
         "AccountERC7579"
       ]
     },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/account/AccountCore.sol": {
-      "lastModificationDate": 1742678519809,
-      "contentHash": "6874dc9fe32e7fb8faaf4899efdb8f4e",
-      "sourceName": "@openzeppelin/community-contracts/contracts/account/AccountCore.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/interfaces/draft-IERC4337.sol",
-        "@openzeppelin/contracts/account/utils/draft-ERC4337Utils.sol",
-        "../utils/cryptography/AbstractSigner.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "AccountCore"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/interfaces/IERC1271.sol": {
-      "lastModificationDate": 1742678703994,
-      "contentHash": "23b303434c124cf5ff1b02d64a3fd711",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC1271.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC1271"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Bytes.sol": {
-      "lastModificationDate": 1742678703984,
-      "contentHash": "4f9a979eebe3c72a708fac89cba4a368",
-      "sourceName": "@openzeppelin/contracts/utils/Bytes.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./math/Math.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.24"
-      ],
-      "artifacts": [
-        "Bytes"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Calldata.sol": {
-      "lastModificationDate": 1742678703985,
-      "contentHash": "6d2a3afdd667f42a65296aa3858e5fd6",
-      "sourceName": "@openzeppelin/contracts/utils/Calldata.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Calldata"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/structs/EnumerableSet.sol": {
-      "lastModificationDate": 1742678703987,
-      "contentHash": "5ebcee79434ffb6fb4911632c8caeff0",
-      "sourceName": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../Arrays.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "EnumerableSet"
-      ]
-    },
     "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/utils/cryptography/AbstractSigner.sol": {
       "lastModificationDate": 1742678519797,
       "contentHash": "312a96a4f51279c722d3138a28e07853",
@@ -564,12 +309,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -579,6 +331,102 @@
       ],
       "artifacts": [
         "AbstractSigner"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/utils/cryptography/SignerERC7702.sol": {
+      "lastModificationDate": 1742678519864,
+      "contentHash": "ff82e45dc3695890dbcec39df487b5db",
+      "sourceName": "@openzeppelin/community-contracts/contracts/utils/cryptography/SignerERC7702.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "cancun",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
+        "./AbstractSigner.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SignerERC7702"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/utils/cryptography/ERC7739.sol": {
+      "lastModificationDate": 1742678519840,
+      "contentHash": "6d7d6185aecceb1a2e63cb09df64eeed",
+      "sourceName": "@openzeppelin/community-contracts/contracts/utils/cryptography/ERC7739.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "cancun",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/interfaces/IERC1271.sol",
+        "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
+        "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol",
+        "@openzeppelin/contracts/utils/ShortStrings.sol",
+        "./AbstractSigner.sol",
+        "./ERC7739Utils.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC7739"
       ]
     },
     "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/account/utils/draft-ERC4337Utils.sol": {
@@ -600,12 +448,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -622,10 +477,10 @@
         "ERC4337Utils"
       ]
     },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/math/Math.sol": {
-      "lastModificationDate": 1742678703998,
-      "contentHash": "84bce022d292b9ccc910e42713eb54bd",
-      "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Packing.sol": {
+      "lastModificationDate": 1742678703999,
+      "contentHash": "9e4428b3aef2511dccf875e291c56440",
+      "sourceName": "@openzeppelin/contracts/utils/Packing.sol",
       "solcConfig": {
         "version": "0.8.28",
         "settings": {
@@ -641,12 +496,105 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Packing"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Calldata.sol": {
+      "lastModificationDate": 1742678703985,
+      "contentHash": "6d2a3afdd667f42a65296aa3858e5fd6",
+      "sourceName": "@openzeppelin/contracts/utils/Calldata.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "cancun",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Calldata"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/math/Math.sol": {
+      "lastModificationDate": 1742678703998,
+      "contentHash": "84bce022d292b9ccc910e42713eb54bd",
+      "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -672,7 +620,7 @@
             "enabled": true,
             "runs": 200
           },
-          "evmVersion": "cancun",
+          "evmVersion": "berlin",
           "outputSelection": {
             "*": {
               "*": [
@@ -680,12 +628,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -708,7 +663,7 @@
             "enabled": true,
             "runs": 200
           },
-          "evmVersion": "cancun",
+          "evmVersion": "berlin",
           "outputSelection": {
             "*": {
               "*": [
@@ -716,12 +671,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -731,352 +693,6 @@
       ],
       "artifacts": [
         "SafeCast"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Arrays.sol": {
-      "lastModificationDate": 1742678703984,
-      "contentHash": "fc639626b16dffbede1a5ef610c5587a",
-      "sourceName": "@openzeppelin/contracts/utils/Arrays.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./Comparators.sol",
-        "./SlotDerivation.sol",
-        "./StorageSlot.sol",
-        "./math/Math.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Arrays"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
-      "lastModificationDate": 1742678704000,
-      "contentHash": "e656d64c4ce918f3d13030b91c935134",
-      "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "StorageSlot"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/SlotDerivation.sol": {
-      "lastModificationDate": 1742678704000,
-      "contentHash": "6a9cf10b35deeeb06dfc869cbc96a43c",
-      "sourceName": "@openzeppelin/contracts/utils/SlotDerivation.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "SlotDerivation"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Comparators.sol": {
-      "lastModificationDate": 1742678703985,
-      "contentHash": "0e57405a6f979853cbfeb0df3546c3a3",
-      "sourceName": "@openzeppelin/contracts/utils/Comparators.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Comparators"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/ShortStrings.sol": {
-      "lastModificationDate": 1742678704000,
-      "contentHash": "b9fd61e08d6faba29b39274c9dabd6c4",
-      "sourceName": "@openzeppelin/contracts/utils/ShortStrings.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./StorageSlot.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ShortStrings"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/utils/cryptography/ERC7739.sol": {
-      "lastModificationDate": 1742678519840,
-      "contentHash": "6d7d6185aecceb1a2e63cb09df64eeed",
-      "sourceName": "@openzeppelin/community-contracts/contracts/utils/cryptography/ERC7739.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/interfaces/IERC1271.sol",
-        "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
-        "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol",
-        "@openzeppelin/contracts/utils/ShortStrings.sol",
-        "./AbstractSigner.sol",
-        "./ERC7739Utils.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ERC7739"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/cryptography/EIP712.sol": {
-      "lastModificationDate": 1742678703986,
-      "contentHash": "f95aaf36e1bc466a16f8c28c02b2faad",
-      "sourceName": "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./MessageHashUtils.sol",
-        "../ShortStrings.sol",
-        "../../interfaces/IERC5267.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "EIP712"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol": {
-      "lastModificationDate": 1742678703998,
-      "contentHash": "e121383688f14298d9b3a1d1846605cf",
-      "sourceName": "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../Strings.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "MessageHashUtils"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/utils/cryptography/ERC7739Utils.sol": {
-      "lastModificationDate": 1742678519843,
-      "contentHash": "b3a4d84f255222a7838edcb0a5706054",
-      "sourceName": "@openzeppelin/community-contracts/contracts/utils/cryptography/ERC7739Utils.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/utils/Calldata.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ERC7739Utils"
       ]
     },
     "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/interfaces/IERC5267.sol": {
@@ -1090,7 +706,7 @@
             "enabled": true,
             "runs": 200
           },
-          "evmVersion": "cancun",
+          "evmVersion": "berlin",
           "outputSelection": {
             "*": {
               "*": [
@@ -1098,12 +714,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1113,6 +736,139 @@
       ],
       "artifacts": [
         "IERC5267"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/ShortStrings.sol": {
+      "lastModificationDate": 1742678704000,
+      "contentHash": "b9fd61e08d6faba29b39274c9dabd6c4",
+      "sourceName": "@openzeppelin/contracts/utils/ShortStrings.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./StorageSlot.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ShortStrings"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol": {
+      "lastModificationDate": 1742678703998,
+      "contentHash": "e121383688f14298d9b3a1d1846605cf",
+      "sourceName": "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../Strings.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "MessageHashUtils"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
+      "lastModificationDate": 1742678704000,
+      "contentHash": "e656d64c4ce918f3d13030b91c935134",
+      "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "StorageSlot"
       ]
     },
     "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
@@ -1126,7 +882,7 @@
             "enabled": true,
             "runs": 200
           },
-          "evmVersion": "cancun",
+          "evmVersion": "berlin",
           "outputSelection": {
             "*": {
               "*": [
@@ -1134,12 +890,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1166,7 +929,7 @@
             "enabled": true,
             "runs": 200
           },
-          "evmVersion": "cancun",
+          "evmVersion": "berlin",
           "outputSelection": {
             "*": {
               "*": [
@@ -1174,12 +937,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1191,208 +961,6 @@
       ],
       "artifacts": [
         "SignedMath"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/contracts/ModularAccount.sol": {
-      "lastModificationDate": 1742691897171,
-      "contentHash": "542ce15cb9db8c8fe46b8d840ed36ffd",
-      "sourceName": "contracts/ModularAccount.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/community-contracts/contracts/account/extensions/AccountERC7579.sol",
-        "@openzeppelin/community-contracts/contracts/utils/cryptography/AbstractSigner.sol",
-        "@openzeppelin/community-contracts/contracts/utils/cryptography/SignerERC7702.sol",
-        "@openzeppelin/community-contracts/contracts/utils/cryptography/ERC7739.sol",
-        "@openzeppelin/community-contracts/contracts/account/AccountCore.sol",
-        "@openzeppelin/contracts/interfaces/draft-IERC4337.sol",
-        "@openzeppelin/community-contracts/contracts/account/Account.sol",
-        "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
-        "hardhat/console.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.28"
-      ],
-      "artifacts": [
-        "ModularAccount"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/hardhat@2.22.19_ts-node@10.9.2_@types+node@22.13.11_typescript@5.8.2__typescript@5.8.2/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1742678517423,
-      "contentHash": "681c532e816169606d13a5fe8b475074",
-      "sourceName": "hardhat/console.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.4.22 <0.9.0"
-      ],
-      "artifacts": [
-        "console"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/account/Account.sol": {
-      "lastModificationDate": 1742678519803,
-      "contentHash": "bbd516f6c6524037c6e614c9ef368754",
-      "sourceName": "@openzeppelin/community-contracts/contracts/account/Account.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/interfaces/draft-IERC4337.sol",
-        "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol",
-        "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol",
-        "../utils/cryptography/ERC7739.sol",
-        "./AccountCore.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Account"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/utils/cryptography/SignerERC7702.sol": {
-      "lastModificationDate": 1742678519864,
-      "contentHash": "ff82e45dc3695890dbcec39df487b5db",
-      "sourceName": "@openzeppelin/community-contracts/contracts/utils/cryptography/SignerERC7702.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/utils/cryptography/ECDSA.sol",
-        "./AbstractSigner.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "SignerERC7702"
-      ]
-    },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol": {
-      "lastModificationDate": 1742678703987,
-      "contentHash": "2d5c4c9aa5ff17fc77d595a1915d9d4e",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "cancun",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../../utils/introspection/ERC165.sol",
-        "../IERC1155Receiver.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ERC1155Holder"
       ]
     },
     "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol": {
@@ -1414,12 +982,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1431,6 +1006,183 @@
       ],
       "artifacts": [
         "ERC721Holder"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol": {
+      "lastModificationDate": 1742678703987,
+      "contentHash": "2d5c4c9aa5ff17fc77d595a1915d9d4e",
+      "sourceName": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "cancun",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../../../utils/introspection/ERC165.sol",
+        "../IERC1155Receiver.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC1155Holder"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
+      "lastModificationDate": 1742678703997,
+      "contentHash": "729ce0904eb533489ffcc3bfe91237d4",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "cancun",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC721Receiver"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/interfaces/IERC1271.sol": {
+      "lastModificationDate": 1742678703994,
+      "contentHash": "23b303434c124cf5ff1b02d64a3fd711",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC1271.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC1271"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+community-contracts@https+++codeload.github.com+OpenZeppelin+openzeppelin_55ba37e4137ad4b45eda2d1a786369c4/node_modules/@openzeppelin/community-contracts/contracts/utils/cryptography/ERC7739Utils.sol": {
+      "lastModificationDate": 1742678519843,
+      "contentHash": "b3a4d84f255222a7838edcb0a5706054",
+      "sourceName": "@openzeppelin/community-contracts/contracts/utils/cryptography/ERC7739Utils.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "cancun",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/Calldata.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC7739Utils"
       ]
     },
     "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
@@ -1452,12 +1204,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1490,12 +1249,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1528,12 +1294,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1545,10 +1318,150 @@
         "IERC165"
       ]
     },
-    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
-      "lastModificationDate": 1742678703997,
-      "contentHash": "729ce0904eb533489ffcc3bfe91237d4",
-      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/interfaces/draft-IERC7579.sol": {
+      "lastModificationDate": 1742678703986,
+      "contentHash": "59b66efd434ab849597739fa9b9f3c77",
+      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC7579.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./draft-IERC4337.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC7579AccountConfig",
+        "IERC7579Execution",
+        "IERC7579Hook",
+        "IERC7579Module",
+        "IERC7579ModuleConfig",
+        "IERC7579Validator"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/structs/EnumerableSet.sol": {
+      "lastModificationDate": 1742678703987,
+      "contentHash": "5ebcee79434ffb6fb4911632c8caeff0",
+      "sourceName": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../Arrays.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "EnumerableSet"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Address.sol": {
+      "lastModificationDate": 1742678703984,
+      "contentHash": "5b9a49c25d7edbc48ffcbd2c7e8a40ef",
+      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./Errors.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Address"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Bytes.sol": {
+      "lastModificationDate": 1742678703984,
+      "contentHash": "4f9a979eebe3c72a708fac89cba4a368",
+      "sourceName": "@openzeppelin/contracts/utils/Bytes.sol",
       "solcConfig": {
         "version": "0.8.28",
         "settings": {
@@ -1564,12 +1477,159 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./math/Math.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "Bytes"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol": {
+      "lastModificationDate": 1742678703986,
+      "contentHash": "05e881bd93a9766a79f3509f180716e9",
+      "sourceName": "@openzeppelin/contracts/account/utils/draft-ERC7579Utils.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "cancun",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "../../interfaces/draft-IERC7579.sol",
+        "../../utils/Packing.sol",
+        "../../utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC7579Utils"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Arrays.sol": {
+      "lastModificationDate": 1742678703984,
+      "contentHash": "fc639626b16dffbede1a5ef610c5587a",
+      "sourceName": "@openzeppelin/contracts/utils/Arrays.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./Comparators.sol",
+        "./SlotDerivation.sol",
+        "./StorageSlot.sol",
+        "./math/Math.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Arrays"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Comparators.sol": {
+      "lastModificationDate": 1742678703985,
+      "contentHash": "0e57405a6f979853cbfeb0df3546c3a3",
+      "sourceName": "@openzeppelin/contracts/utils/Comparators.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1578,7 +1638,93 @@
         "^0.8.20"
       ],
       "artifacts": [
-        "IERC721Receiver"
+        "Comparators"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/SlotDerivation.sol": {
+      "lastModificationDate": 1742678704000,
+      "contentHash": "6a9cf10b35deeeb06dfc869cbc96a43c",
+      "sourceName": "@openzeppelin/contracts/utils/SlotDerivation.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SlotDerivation"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Errors.sol": {
+      "lastModificationDate": 1742678703991,
+      "contentHash": "6b5eac2b85500c3012977849cfd633d8",
+      "sourceName": "@openzeppelin/contracts/utils/Errors.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Errors"
       ]
     },
     "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/cryptography/ECDSA.sol": {
@@ -1592,7 +1738,7 @@
             "enabled": true,
             "runs": 200
           },
-          "evmVersion": "cancun",
+          "evmVersion": "berlin",
           "outputSelection": {
             "*": {
               "*": [
@@ -1600,12 +1746,19 @@
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
-                "metadata"
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
               ],
               "": [
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": true
           }
         }
       },
@@ -1615,6 +1768,278 @@
       ],
       "artifacts": [
         "ECDSA"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/contracts/modules/SocialRecoveryModule.sol": {
+      "lastModificationDate": 1742727460481,
+      "contentHash": "3ca80ff2c21ff872614b04043fa0f0ff",
+      "sourceName": "contracts/modules/SocialRecoveryModule.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/interfaces/draft-IERC7579.sol",
+        "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol",
+        "@openzeppelin/contracts/utils/structs/EnumerableSet.sol",
+        "@openzeppelin/contracts/utils/cryptography/EIP712.sol",
+        "@openzeppelin/contracts/utils/Address.sol",
+        "@openzeppelin/contracts/utils/Nonces.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "SocialRecoveryModule"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol": {
+      "lastModificationDate": 1742678704000,
+      "contentHash": "03f092e4e7befa45c08cfa35b51016cb",
+      "sourceName": "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./ECDSA.sol",
+        "../../interfaces/IERC1271.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SignatureChecker"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/node_modules/.pnpm/@openzeppelin+contracts@5.3.0-rc.0/node_modules/@openzeppelin/contracts/utils/Nonces.sol": {
+      "lastModificationDate": 1742678703998,
+      "contentHash": "c32d108058718efb9061b88e83a83f79",
+      "sourceName": "@openzeppelin/contracts/utils/Nonces.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Nonces"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/contracts/samples/CounterModule.sol": {
+      "lastModificationDate": 1742708887202,
+      "contentHash": "24b0aff9c4d2cb976dc0a125996b7c1d",
+      "sourceName": "contracts/samples/CounterModule.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/interfaces/draft-IERC7579.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "CounterModule"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/contracts/modules/LimitsModule.sol": {
+      "lastModificationDate": 1742711473601,
+      "contentHash": "67105ad25841affbf5d6ec5eb93e1b73",
+      "sourceName": "contracts/modules/LimitsModule.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/interfaces/draft-IERC7579.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC7579HookMock"
+      ]
+    },
+    "/Users/gonzaotc/Developer/Github/ethereum-powerup/contracts/contracts/samples/Counter.sol": {
+      "lastModificationDate": 1742708891965,
+      "contentHash": "c424f46c5e2d539a46b2c4867787fc0c",
+      "sourceName": "contracts/samples/Counter.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "berlin",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Counter"
       ]
     }
   }

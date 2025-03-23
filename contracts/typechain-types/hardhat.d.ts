@@ -142,6 +142,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SafeCast__factory>;
     getContractFactory(
+      name: "Nonces",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Nonces__factory>;
+    getContractFactory(
       name: "Packing",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Packing__factory>;
@@ -154,6 +158,18 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Strings__factory>;
     getContractFactory(
+      name: "ModularAccount",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ModularAccount__factory>;
+    getContractFactory(
+      name: "ERC7579HookMock",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC7579HookMock__factory>;
+    getContractFactory(
+      name: "SocialRecoveryModule",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.SocialRecoveryModule__factory>;
+    getContractFactory(
       name: "Counter",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Counter__factory>;
@@ -161,10 +177,6 @@ declare module "hardhat/types/runtime" {
       name: "CounterModule",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CounterModule__factory>;
-    getContractFactory(
-      name: "ModularAccount",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ModularAccount__factory>;
 
     getContractAt(
       name: "Account",
@@ -327,6 +339,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.SafeCast>;
     getContractAt(
+      name: "Nonces",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Nonces>;
+    getContractAt(
       name: "Packing",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -342,6 +359,21 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Strings>;
     getContractAt(
+      name: "ModularAccount",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ModularAccount>;
+    getContractAt(
+      name: "ERC7579HookMock",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC7579HookMock>;
+    getContractAt(
+      name: "SocialRecoveryModule",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SocialRecoveryModule>;
+    getContractAt(
       name: "Counter",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -351,11 +383,6 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.CounterModule>;
-    getContractAt(
-      name: "ModularAccount",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ModularAccount>;
 
     deployContract(
       name: "Account",
@@ -486,6 +513,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.SafeCast>;
     deployContract(
+      name: "Nonces",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Nonces>;
+    deployContract(
       name: "Packing",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Packing>;
@@ -498,6 +529,18 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Strings>;
     deployContract(
+      name: "ModularAccount",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ModularAccount>;
+    deployContract(
+      name: "ERC7579HookMock",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC7579HookMock>;
+    deployContract(
+      name: "SocialRecoveryModule",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SocialRecoveryModule>;
+    deployContract(
       name: "Counter",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Counter>;
@@ -505,10 +548,6 @@ declare module "hardhat/types/runtime" {
       name: "CounterModule",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.CounterModule>;
-    deployContract(
-      name: "ModularAccount",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ModularAccount>;
 
     deployContract(
       name: "Account",
@@ -671,6 +710,11 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.SafeCast>;
     deployContract(
+      name: "Nonces",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.Nonces>;
+    deployContract(
       name: "Packing",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -686,6 +730,21 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Strings>;
     deployContract(
+      name: "ModularAccount",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ModularAccount>;
+    deployContract(
+      name: "ERC7579HookMock",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.ERC7579HookMock>;
+    deployContract(
+      name: "SocialRecoveryModule",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SocialRecoveryModule>;
+    deployContract(
       name: "Counter",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -695,11 +754,6 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.CounterModule>;
-    deployContract(
-      name: "ModularAccount",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.ModularAccount>;
 
     // default types
     getContractFactory(

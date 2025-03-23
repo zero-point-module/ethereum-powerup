@@ -42,7 +42,7 @@ export function TVControls({
     switch (state) {
       case 'off':
         return {
-          label: 'START',
+          label: 'CONNECT WALLET',
           onClick: onTurnOn,
           variant: 'default' as const,
         };

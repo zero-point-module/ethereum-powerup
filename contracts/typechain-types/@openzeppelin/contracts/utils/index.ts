@@ -9,6 +9,7 @@ import type * as math from "./math";
 export type { math };
 export type { Address } from "./Address";
 export type { Errors } from "./Errors";
+export type { Nonces } from "./Nonces";
 export type { Packing } from "./Packing";
 export type { ShortStrings } from "./ShortStrings";
 export type { Strings } from "./Strings";

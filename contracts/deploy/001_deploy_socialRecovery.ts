@@ -12,7 +12,7 @@ export default async function deploy(hre: HardhatRuntimeEnvironment) {
     from: deployer,
     args: ["Social Recovery Module", "1.0"], // constructor arguments if any
     log: true,
-    // deterministicDeployment: true,
+    deterministicDeployment: true,
   });
 
   console.log("SocialRecoveryModule deployed to:", socialRecoveryModule.address);

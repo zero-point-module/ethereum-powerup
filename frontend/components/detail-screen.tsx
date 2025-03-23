@@ -1,31 +1,15 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import type { DetailScreenProps } from '@/types';
 import { useTextScramble } from '@/hooks/use-text-scramble';
 import { DEFAULT_TERMINAL_CONTENT } from '@/constants';
+import { useWeb3Store } from '@/store/web3Store';
 
-// Helper function to generate module-specific content
-const getModuleContent = (moduleId: number) => {
+const getModuleContent = (moduleId: string) => {
   // This could be expanded to pull from a database or API in the future
-  const moduleSpecificContent = {
-    1: `
-SOCIAL RECOVERY MODULE v1.2.4
------------------------------
-STATUS: READY FOR DEPLOYMENT
-
-This module enables wallet recovery through trusted contacts.
-Each contact holds a fragment of your recovery key.
-
-CONFIGURATION OPTIONS:
-- Trusted contacts: 0/5 configured
-- Recovery threshold: 3 (default)
-- Time delay: 48 hours (default)
-- Security level: Standard
-
-Run setup wizard to configure recovery options.
-`,
-    2: `
+  const moduleSpecificContent: Record<string, string> = {
+    'system-diagnostics': `
 SYSTEM DIAGNOSTICS MODULE v2.0.1
 --------------------------------
 STATUS: READY FOR SCAN
@@ -43,7 +27,7 @@ WARNING: 3 potential vulnerabilities detected
 
 Last scan: Never
 `,
-    3: `
+    'radio-transmitter': `
 RADIO TRANSMITTER MODULE v0.8.7
 ------------------------------
 STATUS: INACTIVE (NO SIGNAL)
@@ -60,7 +44,7 @@ Message queue: Empty
 NOTICE: This module requires authorization
 before full functionality is unlocked.
 `,
-    4: `
+    'inventory-manager': `
 INVENTORY MANAGER MODULE v1.5.3
 ------------------------------
 STATUS: READY
@@ -79,11 +63,7 @@ Sort functionality ready.
 `,
   };
 
-  // Return module-specific content or default content
-  return (
-    moduleSpecificContent[moduleId as keyof typeof moduleSpecificContent] ||
-    DEFAULT_TERMINAL_CONTENT
-  );
+  return moduleSpecificContent[moduleId] || DEFAULT_TERMINAL_CONTENT;
 };
 
 export function DetailScreen({
@@ -94,20 +74,90 @@ export function DetailScreen({
   const [cursorVisible, setCursorVisible] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  const { socialRecoveryAddresses, setSocialRecoveryAddresses } =
+    useWeb3Store();
+
+  // Handle address change
+  const handleAddressChange = (index: number, value: string) => {
+    const newAddresses = [...socialRecoveryAddresses];
+
+    if (value === '') {
+      newAddresses[index] = '';
+    } else {
+      newAddresses[index] = value;
+    }
+
+    setSocialRecoveryAddresses(newAddresses);
+  };
+
+  const renderSocialRecoveryContent = () => (
+    <div className="font-mono text-[#00ff00]">
+      <div className="mb-6">
+        <h1 className="text-xl mb-1">SOCIAL RECOVERY MODULE v1.2.4</h1>
+        <div className="border-b border-[#00ff00] mb-4"></div>
+        <p className="mb-2">STATUS: AWAITING CONFIGURATION</p>
+      </div>
+
+      <div className="mb-6">
+        <p>Welcome to the Social Recovery setup wizard.</p>
+        <p>This module enables wallet recovery through trusted contacts.</p>
+        <p>Each contact will hold a fragment of your recovery key.</p>
+      </div>
+
+      <div className="mb-6">
+        <h2 className="text-lg mb-4">REQUIRED SETUP:</h2>
+        <p className="mb-4">
+          Please enter 2 trusted Ethereum addresses that will help you recover
+          your wallet if needed.
+        </p>
+
+        <div className="space-y-4">
+          {[0, 1].map((index) => (
+            <div key={index} className="flex flex-col">
+              <label className="mb-1 opacity-80">Address {index + 1}:</label>
+              <input
+                type="text"
+                value={socialRecoveryAddresses[index] || ''}
+                onChange={(e) => handleAddressChange(index, e.target.value)}
+                className="bg-[#001800] border border-[#00ff00] p-2 font-mono text-[#00ff00] w-full focus:outline-none focus:border-[#00ff00] focus:ring-1 focus:ring-[#00ff00]"
+                placeholder="Enter Ethereum address (0x...)"
+                spellCheck="false"
+                maxLength={42}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
   // Get module-specific content if a module is selected
-  const content = selectedItem
-    ? getModuleContent(Number(selectedItem.id))
-    : DEFAULT_TERMINAL_CONTENT;
+  const renderContent = () => {
+    if (!selectedItem) return null;
+
+    if (selectedItem.id === 'social-recovery') {
+      return renderSocialRecoveryContent();
+    }
+
+    return (
+      <pre className="whitespace-pre-wrap">
+        {getModuleContent(selectedItem.id)}
+      </pre>
+    );
+  };
 
   const isActive = state === 'active' && selectedItem !== null;
 
   // Use key prop based on selectedItem to force re-render and restart animation
   const scrambleKey = selectedItem ? `module-${selectedItem.id}` : 'no-module';
 
+  // Only use text scramble for non-interactive content
+  const useScramble =
+    selectedItem?.id !== 'social-recovery' && selectedItem !== null;
   const { displayText } = useTextScramble({
-    text: content,
-    isActive: isActive && !isWorkbenchActive,
-    key: scrambleKey, // This will trigger the animation reset when the module changes
+    text: useScramble ? getModuleContent(selectedItem?.id || '') : '',
+    isActive: isActive && !isWorkbenchActive && useScramble,
+    key: scrambleKey,
   });
 
   // Blinking cursor effect
@@ -201,8 +251,9 @@ export function DetailScreen({
                     </svg>
                   </div>
                 </div>
+              ) : selectedItem?.id === 'social-recovery' ? (
+                renderContent()
               ) : (
-                // Key attribute on the pre element ensures DOM updates when scrambleKey changes
                 <pre key={scrambleKey} className="whitespace-pre-wrap">
                   {displayText}
                   {cursorVisible ? '█' : ' '}

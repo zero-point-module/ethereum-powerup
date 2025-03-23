@@ -46,3 +46,15 @@ export interface ActionButtonProps {
 export interface TVFrameProps {
   children: React.ReactNode;
 }
+
+export interface TVSidebarProps {
+  state: TVState;
+  items: Item[];
+  selectedItem: Item | null;
+  isWorkbenchActive: boolean;
+  onSelectItem: (item: Item) => void;
+  onTurnOn: () => void;
+  onActivate: () => void;
+  onWorkbenchToggle: () => void;
+  isInstallEnabled?: boolean;
+}

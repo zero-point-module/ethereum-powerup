@@ -10,6 +10,12 @@ import { grrrrrrrrrrrrrrr } from './constants';
 
 const MODULE_TYPE_EXECUTOR = 2;
 
+// Define an interface for the installation parameters
+interface InstallModuleParams {
+  module: Item;
+  addresses: string[];
+}
+
 export function useModules() {
   const [isInstalling, setIsInstalling] = useState(false);
   const [isUninstalling, setIsUninstalling] = useState(false);
@@ -25,7 +31,8 @@ export function useModules() {
   const queryClient = useQueryClient();
 
   const install = useMutation({
-    mutationFn: async (module: Item) => {
+    mutationFn: async (params: InstallModuleParams) => {
+      const { module, addresses } = params;
       setIsInstalling(true);
 
       if (!signer || !address) {
@@ -41,7 +48,7 @@ export function useModules() {
 
       const bytesInitData = ethers.AbiCoder.defaultAbiCoder().encode(
         ['address[]', 'uint256', 'uint256'],
-        [['0xFA9cB6DbB7cd427EE221c0B2f0185D94d3d54730'], 1, 1_000]
+        [addresses, 2, 1_000]
       );
 
       const isModuleInstalled = await smartWallet.isModuleInstalled(
@@ -100,7 +107,7 @@ export function useModules() {
           gasLimit: 1_000_000,
         }
       );
-      
+
       await tx.wait();
       removeModule(moduleId);
       return tx;

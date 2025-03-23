@@ -6,19 +6,19 @@ import { TVSidebar } from './tv-sidebar';
 import { TVMainDisplay } from './tv-main-display';
 import { useTVStore } from '@/store/tv-store';
 import { DEFAULT_MODULES } from '@/constants';
-import { useModules } from '@/hooks/eoa/use-modules';
 import { useWeb3Store } from '@/store/web3Store';
 
 export default function VintageTV() {
   // Get state and actions from Zustand stores
   const { state, selectedItem, turnOn, activate, selectItem } = useTVStore();
-  const { connect } = useWeb3Store();
+  const { connect, setSocialRecoveryAddresses } = useWeb3Store();
 
   const [isWorkbenchActive, setIsWorkbenchActive] = useState(false);
 
   // Reset workbench state when selectedItem changes
   useEffect(() => {
     // Turn off workbench mode whenever a new module is selected
+    setSocialRecoveryAddresses([]);
     setIsWorkbenchActive(false);
   }, [selectedItem]);
 

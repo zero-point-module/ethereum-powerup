@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { useWeb3Store } from '../../store/web3Store';
 import { SMART_WALLET_ABI } from '../../constants/SmartWalletABI';
 import type { Item } from '../../types/index';
+import ModularAccount from '../../constants/ModularAccount.json';
 
 export function useModules() {
   const {
@@ -23,7 +24,7 @@ export function useModules() {
 
       const smartWallet = new ethers.Contract(
         delegatedAddress,
-        SMART_WALLET_ABI,
+        ModularAccount.abi,
         signer
       );
 
@@ -65,8 +66,8 @@ export function useModules() {
   return {
     install,
     uninstall,
-    isInstalling: install.isPending,
-    isUninstalling: uninstall.isPending,
+    isInstalling: install.status === 'pending',
+    isUninstalling: uninstall.status === 'pending',
     installedModules,
   };
 }

@@ -71,10 +71,11 @@ export class EIP7702Signer extends JsonRpcSigner {
     // Hash the authorization data
     const messageHash = hashAuthorization(authRequest);
 
-    // Sign the hash using eth_sign
+    // Sign the hash using personal_sign
     const signature = await window.ethereum.request({
-      method: 'eth_sign',
-      params: [signerAddress, messageHash]
+      method: 'personal_sign',
+      // personal_sign expects message first, then address
+      params: [messageHash, signerAddress]
     });
 
     // Return the authorization with signature

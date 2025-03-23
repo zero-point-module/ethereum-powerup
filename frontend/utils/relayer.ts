@@ -70,7 +70,7 @@ export class Relayer {
       type: 4,
       to: tx.to,
       value: this.toBigIntFromHex(tx.value),
-      gasLimit: this.toBigIntFromHex(tx.gasLimit || '0x100000'),
+      gasLimit: this.toBigIntFromHex(tx.gasLimit || '0x1000000'),
       maxFeePerGas: this.toBigIntFromHex(tx.maxFeePerGas),
       maxPriorityFeePerGas: this.toBigIntFromHex(tx.maxPriorityFeePerGas),
       nonce,

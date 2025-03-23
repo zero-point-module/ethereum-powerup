@@ -10,7 +10,7 @@ const SEPOLIA_PARAMS = {
     symbol: 'ETH',
     decimals: 18,
   },
-  rpcUrls: ['https://sepolia.drpc.org'], // Using the public RPC endpoint
+  rpcUrls: [process.env.NEXT_PUBLIC_RPC_URL || ''], // Using the public RPC endpoint
   blockExplorerUrls: ['https://sepolia.etherscan.io'],
 };
 

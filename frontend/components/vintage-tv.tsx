@@ -7,12 +7,12 @@ import { TVMainDisplay } from './tv-main-display';
 import { useTVStore } from '@/store/tv-store';
 import { DEFAULT_MODULES } from '@/constants';
 import { useModules } from '@/hooks/eoa/use-modules';
+import { useWeb3Store } from '@/store/web3Store';
+
 export default function VintageTV() {
   // Get state and actions from Zustand stores
   const { state, selectedItem, turnOn, activate, selectItem } = useTVStore();
-
-  const { installedModules, install, uninstall, isInstalling, isUninstalling } =
-    useModules();
+  const { connect } = useWeb3Store();
 
   const [isWorkbenchActive, setIsWorkbenchActive] = useState(false);
 
@@ -40,7 +40,10 @@ export default function VintageTV() {
             selectedItem={selectedItem}
             isWorkbenchActive={isWorkbenchActive}
             onSelectItem={selectItem}
-            onTurnOn={turnOn}
+            onTurnOn={() => {
+              connect();
+              turnOn();
+            }}
             onActivate={activate}
             onWorkbenchToggle={toggleWorkbench}
           />

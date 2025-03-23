@@ -35,7 +35,6 @@ interface Web3Actions {
   removeModule: (moduleId: string) => void;
   connect: () => Promise<void>;
   disconnect: () => void;
-  setupEventListeners: () => () => void;
   reset: () => void;
   setSignerFromPrivateKey: (privateKey: string) => void;
 }
@@ -108,11 +107,6 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
   connect: async () => {
     const { setIsConnecting, setError, reset } = get();
 
-    if (!window.ethereum) {
-      setError(new Error('MetaMask is not installed'));
-      return;
-    }
-
     setIsConnecting(true);
     setError(null);
 
@@ -129,7 +123,7 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
 
       // Create Relayer with the same provider
       const relayerProvider = new JsonRpcProvider(
-        window.ethereum.rpcUrls?.default?.at(0) ||
+        window.ethereum?.rpcUrls?.default?.at(0) ||
           process.env.NEXT_PUBLIC_RPC_URL ||
           ''
       );
@@ -161,49 +155,5 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
 
   disconnect: () => {
     get().reset();
-  },
-
-  setupEventListeners: () => {
-    const { connect, disconnect, setAddress, setChainId } = get();
-
-    if (window.ethereum) {
-      // Setup event listeners
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
-        if (accounts.length === 0) {
-          disconnect();
-        } else {
-          setAddress(accounts[0]);
-        }
-      });
-
-      window.ethereum.on('chainChanged', (newChainId: string) => {
-        setChainId(Number(newChainId));
-      });
-
-      window.ethereum.on('disconnect', () => {
-        disconnect();
-      });
-
-      // Check if already connected
-      window.ethereum
-        .request({ method: 'eth_accounts' })
-        .then((accounts: string[]) => {
-          if (accounts.length > 0) {
-            connect();
-          }
-        })
-        .catch((err: unknown) => {
-          console.error('Failed to check accounts:', err);
-        });
-    }
-
-    // Return cleanup function
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', () => {});
-        window.ethereum.removeListener('chainChanged', () => {});
-        window.ethereum.removeListener('disconnect', () => {});
-      }
-    };
   },
 }));

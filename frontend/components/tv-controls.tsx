@@ -25,6 +25,11 @@ export function TVControls({
   onUninstall,
   onWorkbenchToggle,
 }: TVControlsProps) {
+  // Get the current selected module's installation status
+  const isCurrentModuleInstalled = selectedItem
+    ? isModuleInstalled(selectedItem.id)
+    : false;
+
   // Determine which button to show based on state and module installation status
   const buttonProps = useMemo(() => {
     switch (state) {
@@ -52,7 +57,7 @@ export function TVControls({
         }
 
         // If selected item is installed, show uninstall button
-        if (isModuleInstalled(selectedItem.id)) {
+        if (isCurrentModuleInstalled) {
           return {
             label: 'UNINSTALL MODULE',
             onClick: onUninstall,
@@ -72,11 +77,11 @@ export function TVControls({
   }, [
     state,
     selectedItem,
+    isCurrentModuleInstalled,
     onTurnOn,
     onActivate,
     onInstall,
     onUninstall,
-    isModuleInstalled,
     isWorkbenchActive,
     onWorkbenchToggle,
   ]);

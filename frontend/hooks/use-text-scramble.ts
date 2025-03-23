@@ -1,87 +1,99 @@
-"use client"
+'use client';
 
-import { useState, useEffect, useCallback } from "react"
-import { SCRAMBLE_CHARS } from "@/constants"
+import { useState, useEffect, useCallback } from 'react';
+import { SCRAMBLE_CHARS } from '@/constants';
 
 interface UseTextScrambleOptions {
-  text: string
-  isActive: boolean
-  speed?: number
-  stabilizeSpeed?: number
+  text: string;
+  isActive: boolean;
+  speed?: number;
+  stabilizeSpeed?: number;
+  key?: string;
 }
 
-export function useTextScramble({ text, isActive, speed = 30, stabilizeSpeed = 0.1 }: UseTextScrambleOptions) {
-  const [displayText, setDisplayText] = useState("")
-  const [scrambling, setScrambling] = useState(false)
+export function useTextScramble({
+  text,
+  isActive,
+  speed = 30,
+  stabilizeSpeed = 0.1,
+  key,
+}: UseTextScrambleOptions) {
+  const [displayText, setDisplayText] = useState('');
+  const [scrambling, setScrambling] = useState(false);
 
   const startScramble = useCallback(() => {
-    if (!isActive || !text) return
+    if (!isActive || !text) return;
 
-    setScrambling(true)
-    setDisplayText("")
+    setScrambling(true);
+    setDisplayText('');
 
-    let displayedText = ""
-    let fullTextRevealed = false
-    const scrambleChars = Array(text.length).fill(0)
+    let displayedText = '';
+    let fullTextRevealed = false;
+    const scrambleChars = Array(text.length).fill(0);
 
     const interval = setInterval(() => {
       if (!fullTextRevealed) {
         // Gradually reveal the text
-        const newLength = Math.min(displayedText.length + 3, text.length)
-        displayedText = text.substring(0, newLength)
+        const newLength = Math.min(displayedText.length + 3, text.length);
+        displayedText = text.substring(0, newLength);
 
         // Check if we've revealed the full text
         if (displayedText.length >= text.length) {
-          fullTextRevealed = true
+          fullTextRevealed = true;
         }
       } else {
         // Stabilize characters one by one
-        let allStabilized = true
-        let scrambledText = ""
+        let allStabilized = true;
+        let scrambledText = '';
 
         for (let i = 0; i < text.length; i++) {
-          if (text[i] === "\n" || text[i] === " ") {
-            scrambledText += text[i]
-            scrambleChars[i] = 1
+          if (text[i] === '\n' || text[i] === ' ') {
+            scrambledText += text[i];
+            scrambleChars[i] = 1;
           } else if (scrambleChars[i] >= 1) {
-            scrambledText += text[i]
+            scrambledText += text[i];
           } else {
             // Randomly decide if this character should stabilize
             if (Math.random() < stabilizeSpeed) {
-              scrambleChars[i] = 1
-              scrambledText += text[i]
+              scrambleChars[i] = 1;
+              scrambledText += text[i];
             } else {
-              scrambledText += SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
-              allStabilized = false
+              scrambledText +=
+                SCRAMBLE_CHARS[
+                  Math.floor(Math.random() * SCRAMBLE_CHARS.length)
+                ];
+              allStabilized = false;
             }
           }
         }
 
-        displayedText = scrambledText
+        displayedText = scrambledText;
 
         // End scrambling when all characters are stabilized
         if (allStabilized) {
-          clearInterval(interval)
-          setScrambling(false)
+          clearInterval(interval);
+          setScrambling(false);
         }
       }
 
-      setDisplayText(displayedText)
-    }, speed)
+      setDisplayText(displayedText);
+    }, speed);
 
-    return () => clearInterval(interval)
-  }, [isActive, text, speed, stabilizeSpeed])
+    return () => clearInterval(interval);
+  }, [isActive, text, speed, stabilizeSpeed]);
 
   useEffect(() => {
     if (isActive && text) {
-      const cleanup = startScramble()
-      return cleanup
+      setDisplayText('');
+      setScrambling(true);
+
+      const cleanup = startScramble();
+      return cleanup;
     } else {
-      setDisplayText("")
-      setScrambling(false)
+      setDisplayText('');
+      setScrambling(false);
     }
-  }, [isActive, text, startScramble])
+  }, [isActive, text, startScramble, key]);
 
-  return { displayText, scrambling }
+  return { displayText, scrambling };
 }
-

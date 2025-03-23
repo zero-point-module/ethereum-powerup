@@ -5,6 +5,87 @@ import type { DetailScreenProps } from '@/types';
 import { useTextScramble } from '@/hooks/use-text-scramble';
 import { DEFAULT_TERMINAL_CONTENT } from '@/constants';
 
+// Helper function to generate module-specific content
+const getModuleContent = (moduleId: number) => {
+  // This could be expanded to pull from a database or API in the future
+  const moduleSpecificContent = {
+    1: `
+SOCIAL RECOVERY MODULE v1.2.4
+-----------------------------
+STATUS: READY FOR DEPLOYMENT
+
+This module enables wallet recovery through trusted contacts.
+Each contact holds a fragment of your recovery key.
+
+CONFIGURATION OPTIONS:
+- Trusted contacts: 0/5 configured
+- Recovery threshold: 3 (default)
+- Time delay: 48 hours (default)
+- Security level: Standard
+
+Run setup wizard to configure recovery options.
+`,
+    2: `
+SYSTEM DIAGNOSTICS MODULE v2.0.1
+--------------------------------
+STATUS: READY FOR SCAN
+
+System health metrics:
+- CPU: Operational
+- Memory: 94% available
+- Storage: 82% available
+- Network: Connected (750 Mbps)
+
+WARNING: 3 potential vulnerabilities detected
+- CVE-2023-0215: Medium severity
+- CVE-2022-9876: Low severity
+- CVE-2023-1173: Medium severity
+
+Last scan: Never
+`,
+    3: `
+RADIO TRANSMITTER MODULE v0.8.7
+------------------------------
+STATUS: INACTIVE (NO SIGNAL)
+
+Available channels:
+- Emergency broadcast (locked)
+- Local mesh network (available)
+- Global broadcast (restricted)
+
+Signal strength: --
+Last transmission: Never
+Message queue: Empty
+
+NOTICE: This module requires authorization
+before full functionality is unlocked.
+`,
+    4: `
+INVENTORY MANAGER MODULE v1.5.3
+------------------------------
+STATUS: READY
+
+Current inventory:
+- Weapons: 0 items
+- Apparel: 0 items
+- Aid: 0 items
+- Misc: 0 items
+
+Storage capacity: 0/250 lbs (0%)
+Value: 0 caps
+
+Search functionality ready.
+Sort functionality ready.
+`,
+  };
+
+  // Return module-specific content or default content
+  return (
+    moduleSpecificContent[moduleId as keyof typeof moduleSpecificContent] ||
+    DEFAULT_TERMINAL_CONTENT
+  );
+};
+
 export function DetailScreen({
   state,
   selectedItem,
@@ -13,10 +94,20 @@ export function DetailScreen({
   const [cursorVisible, setCursorVisible] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  // Get module-specific content if a module is selected
+  const content = selectedItem
+    ? getModuleContent(selectedItem.id)
+    : DEFAULT_TERMINAL_CONTENT;
+
   const isActive = state === 'active' && selectedItem !== null;
+
+  // Use key prop based on selectedItem to force re-render and restart animation
+  const scrambleKey = selectedItem ? `module-${selectedItem.id}` : 'no-module';
+
   const { displayText, scrambling } = useTextScramble({
-    text: DEFAULT_TERMINAL_CONTENT,
+    text: content,
     isActive: isActive && !isWorkbenchActive,
+    key: scrambleKey, // This will trigger the animation reset when the module changes
   });
 
   // Blinking cursor effect
@@ -111,15 +202,22 @@ export function DetailScreen({
                   </div>
                 </div>
               ) : (
-                <pre className="whitespace-pre-wrap">
+                // Key attribute on the pre element ensures DOM updates when scrambleKey changes
+                <pre key={scrambleKey} className="whitespace-pre-wrap">
                   {displayText}
                   {cursorVisible ? '█' : ' '}
                 </pre>
               )
             ) : (
-              <div className="h-full flex items-center justify-center">
-                <div className="text-[#00ff00] font-mono text-xl tracking-widest">
-                  SELECT AN ITEM
+              <div className="h-full flex flex-col items-center justify-center">
+                <div className="text-[#00ff00] font-mono text-xl tracking-widest mb-4">
+                  NO MODULE SELECTED
+                </div>
+                <div className="text-[#00ff00] font-mono text-sm opacity-70 mb-2 text-center max-w-md">
+                  Select a module from the left panel to view details.
+                </div>
+                <div className="text-[#00ff00] font-mono text-xs opacity-50 text-center max-w-md">
+                  You can click a selected module again to deselect it.
                 </div>
               </div>
             )}

@@ -1,42 +1,48 @@
-import type React from "react"
+import type React from 'react';
 // Define our interface states
-export type TVState = "off" | "on" | "active"
+export type TVState = 'off' | 'on' | 'active';
+
+// Define button variants
+export type ButtonVariant = 'default' | 'power-up' | 'install' | 'uninstall';
 
 // Define our list items
 export interface Item {
-  id: number
-  title: string
-  description?: string
+  id: number;
+  title: string;
+  description?: string;
 }
 
 // Component props types
 export interface CircularDisplayProps {
-  state: TVState
+  state: TVState;
 }
 
 export interface ListDisplayProps {
-  items: Item[]
-  state: TVState
-  selectedItem: Item | null
-  onSelectItem: (item: Item) => void
+  items: Item[];
+  state: TVState;
+  selectedItem: Item | null;
+  onSelectItem: (item: Item) => void;
 }
 
 export interface DetailScreenProps {
-  state: TVState
-  selectedItem: Item | null
+  state: TVState;
+  selectedItem: Item | null;
+  isWorkbenchActive?: boolean;
 }
 
 export interface ActionButtonProps {
-  label: string
-  onClick: () => void
-  disabled?: boolean
-  className?: string
-  tvState?: TVState
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+  className?: string;
+  tvState?: TVState;
+  variant?: ButtonVariant;
+  isWorkbenchActive?: boolean;
+  onWorkbenchClick?: () => void;
 }
 
 export interface TVFrameProps {
-  children: React.ReactNode
-  onPowerClick: () => void
-  isPowered: boolean
+  children: React.ReactNode;
+  onPowerClick: () => void;
+  isPowered: boolean;
 }
-

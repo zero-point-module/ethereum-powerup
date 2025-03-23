@@ -24,7 +24,7 @@ Explore, install, and uninstall your desired features/modules from the decentral
 <br /> 
 
 3. Q: What is a Modular Smart Wallet? Why modules? <br /> 
-3. A: A Modular Smart Wallet follows the ERC-7579 Standard by organizing wallet features into minimal `modules` that can be `installed`, `uninstalled` and usually `configured` to enhance your smart wallet with custom features. This standard is widely adopted, massively increasing interoperability, and reduces vendor lock-in. As an example, potentially, a module built by `Safe` could be installed in an `Alchemy` wallet and vice versa. Wallet features/modules should not be built and audited twice. Let's foster wallet interop!
+3. A: A Modular Smart Wallet follows the ERC-7579 Standard by organizing wallet features into minimal `modules` that can be `installed`, `uninstalled` and usually `configured` to enhance your smart wallet with custom features. This standard is widely adopted, massively increasing interoperability and reducing vendor lock-in. For example, a module built by `Safe` could potentially be installed in an `Alchemy` wallet and vice versa. Wallet features/modules should not be built and audited twice. Let's foster wallet interop!
 
 
 ### Technical components:
@@ -32,6 +32,28 @@ Explore, install, and uninstall your desired features/modules from the decentral
 - ERC-7579: Minimal Modular Smart Accounts 
 - EIP-7702: Set EOA account code
 
+### Available deployed contracts
+
+**Ethereum Sepolia:**
+- ERC-7559 Modular Account: 0x3E3E97AC0436F3e20E921b2DE5Cb954A3Dd18828
+- ERC-7579 Social Recovery: 0x1A2cCD47aEEbd4B7D115758FdFb3C9339E7A4C87
+
+**Worldcoin:**
+- ERC-7559 Modular Account: 0x3E3E97AC0436F3e20E921b2DE5Cb954A3Dd18828
+- ERC-7579 Social Recovery: 0x1A2cCD47aEEbd4B7D115758FdFb3C9339E7A4C87
+  
+**Optimism:**
+- ERC-7559 Modular Account: 0x3E3E97AC0436F3e20E921b2DE5Cb954A3Dd18828
+- ERC-7579 Social Recovery: 0x1A2cCD47aEEbd4B7D115758FdFb3C9339E7A4C87
+  
+**Mantle:**
+- ERC-7559 Modular Account: 0x3E3E97AC0436F3e20E921b2DE5Cb954A3Dd18828
+- ERC-7579 Social Recovery: 0xCd5134Cc7Fafaf1A391460de4781e70EC36C169a
+
+**ZKSync:**
+- ERC-7559 Modular Account: 0x2Bb775B3c88fcde6FCC0726574F790c8a5cAF676 
+- ERC-7579 Social Recovery: `<getting errors at deployment>`
+  
 
 ### Members:
 Gonzalo Othacehe
@@ -44,6 +66,8 @@ Ethers ERC-7702 impl: https://github.com/ethers-io/ethers.js/issues/4916<br />
 Red Guild 7702 Playground: https://github.com/theredguild/7702-goat<br /> 
 OpenZeppelin Draft Contracts:  https://github.com/OpenZeppelin/openzeppelin-community-contracts<br /> 
 Ethereum Magicians: https://ethereum-magicians.org/t/eip-7702-set-eoa-account-code/19923<br /> 
+
+
 
 ### Disclaimer
 All the code is unaudited, not properly tested, and still very experimental. <br /> 

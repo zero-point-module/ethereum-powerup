@@ -75,7 +75,12 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
   setIsConnected: (isConnected) => set({ isConnected }),
   setIsConnecting: (isConnecting) => set({ isConnecting }),
   setError: (error) => set({ error }),
-  setIsUpgraded: (isUpgraded) => set({ isUpgraded }),
+  setIsUpgraded: (isUpgraded) => {
+    set({ isUpgraded });
+    if (isUpgraded) {
+      get().loadInstalledModules();
+    }
+  },
   setDelegatedAddress: (delegatedAddress) => set({ delegatedAddress }),
 
   setSignerFromPrivateKey: (privateKey) => {
@@ -88,9 +93,6 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
         signer: wallet,
         address: wallet.address,
       });
-
-      // Load installed modules after changing signer
-      get().loadInstalledModules();
     } catch (error) {
       set({
         error:
@@ -213,9 +215,6 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
         isConnected: true,
         error: null,
       });
-
-      // Load installed modules after setting signer and address
-      await loadInstalledModules();
     } catch (error) {
       reset();
       setError(error instanceof Error ? error : new Error('Failed to connect'));

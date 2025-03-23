@@ -12,7 +12,7 @@ export default function VintageTV() {
   const { state, selectedItem, turnOn, activate, togglePower, selectItem } =
     useTVStore();
 
-  const { installedModules, install, uninstall } = useModules();
+  const { installedModules, install, uninstall, isInstalling, isUninstalling } = useModules();
 
   const [isWorkbenchActive, setIsWorkbenchActive] = useState(false);
 
@@ -26,7 +26,9 @@ export default function VintageTV() {
   const handleInstall = useCallback(() => {
     if (
       selectedItem &&
-      !installedModules.some((module) => module.id === selectedItem.id)
+      !installedModules.some((module) => module.id === selectedItem.id) &&
+      !isInstalling &&
+      !isUninstalling
     ) {
       install.mutate(selectedItem);
     }

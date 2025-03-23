@@ -13,7 +13,7 @@ function ListDisplayComponent({
 }: ListDisplayProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showOnlyInstalled, setShowOnlyInstalled] = useState(false);
-  const { installedModules } = useModules();
+  const { installedModules, isInstalling, isUninstalling } = useModules();
 
   // Filter items based on search query and installation status
   const filteredItems = items.filter((item) => {
@@ -117,7 +117,7 @@ function ListDisplayComponent({
                 }
                 disabled={state !== 'active'}
               >
-                <span className="text-[#00ff00] font-mono text-xs">
+                <span className="text-[#00ff00] font-mono text-lg">
                   {showOnlyInstalled ? '✓' : '⚙'}
                 </span>
               </button>
@@ -131,6 +131,7 @@ function ListDisplayComponent({
                 state={state}
                 isSelected={selectedItem?.id === item.id}
                 isInstalled={installedModules.includes(item)}
+                isDisabled={isInstalling || isUninstalling}
                 onSelect={() => state === 'active' && onSelectItem(item)}
               />
             ))}
@@ -162,6 +163,7 @@ interface ListItemProps {
   state: 'off' | 'on' | 'active';
   isSelected: boolean;
   isInstalled: boolean;
+  isDisabled: boolean;
   onSelect: () => void;
 }
 
@@ -170,6 +172,7 @@ const ListItem = memo(function ListItem({
   state,
   isSelected,
   isInstalled,
+  isDisabled,
   onSelect,
 }: ListItemProps) {
   return (
@@ -179,7 +182,7 @@ const ListItem = memo(function ListItem({
         transition-all duration-200 transform
         h-10 min-h-[40px] relative overflow-visible
         ${
-          state === 'active'
+          state === 'active' && !isDisabled
             ? 'cursor-pointer hover:scale-[1.02]'
             : 'cursor-not-allowed opacity-70'
         }
@@ -194,7 +197,7 @@ const ListItem = memo(function ListItem({
       title={isSelected ? 'Click to deselect' : item.name}
     >
       {/* Installation indicator - positioned absolutely to avoid affecting layout */}
-      {isInstalled && (
+      {isInstalled && !isDisabled && (
         <div className="absolute left-[-10px] top-1/2 transform -translate-y-1/2 w-4 h-4 bg-[#00ff00] rounded-full flex items-center justify-center text-black text-xs font-bold z-10">
           ✓
         </div>

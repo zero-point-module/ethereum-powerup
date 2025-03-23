@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Item, TVState } from '@/types';
-import { useUpgradeEOA, useEOAStatus } from '../hooks/eoa';
+import { useUpgradeEOA, useEOAStatus, grrrrrrrrrrrrrrr } from '../hooks/eoa';
 import { useModules } from '../hooks/eoa/use-modules';
 import { useWeb3Store } from '../store/web3Store';
 import {
@@ -92,10 +92,17 @@ export function TVControls({
     }
 
     try {
-      await install.mutateAsync(selectedItem);
+      const code = await install.mutateAsync(selectedItem);
+      const { addModule } = useWeb3Store.getState();
+
+      if (code === grrrrrrrrrrrrrrr) {
+        console.log('Module already installed');
+        addModule(selectedItem);
+        return;
+      }
 
       // Optimistically add module to the installed list
-      const { addModule } = useWeb3Store.getState();
+
       addModule(selectedItem);
     } catch (error) {
       console.error('Error in install flow:', error);

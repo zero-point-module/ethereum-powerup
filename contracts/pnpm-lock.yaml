@@ -14,6 +14,12 @@ importers:
       '@nomicfoundation/hardhat-toolbox':
         specifier: ^5.0.0
         version: 5.0.0(22cba87c94003ede975f47e793ccd640)
+      '@openzeppelin/community-contracts':
+        specifier: github:OpenZeppelin/openzeppelin-community-contracts
+        version: https://codeload.github.com/OpenZeppelin/openzeppelin-community-contracts/tar.gz/cc554fc5cfee7498dc0177beb01118e4499826f6
+      '@openzeppelin/contracts':
+        specifier: 5.3.0-rc.0
+        version: 5.3.0-rc.0
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -38,6 +44,10 @@ packages:
 
   '@adraffy/ens-normalize@1.10.1':
     resolution: {integrity: sha512-96Z2IP3mYmF1Xg2cDm8f1gWGf/HUVedQ3FMifV4kG/PQ4yEP51xDtRAEfhVNt5f/uzpNkZHwWQuUcu6D6K+Ekw==}
+
+  '@axelar-network/axelar-gmp-sdk-solidity@6.0.6':
+    resolution: {integrity: sha512-XIcDlr1HoYSqcxuvvusILmiqerh2bL9NJLwU4lFBAJK5E/st/q3Em9ropBBZML9iuUZ+hDsch8Ev9rMO+ulaSQ==}
+    engines: {node: '>=18'}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -355,6 +365,13 @@ packages:
   '@nomicfoundation/solidity-analyzer@0.1.2':
     resolution: {integrity: sha512-q4n32/FNKIhQ3zQGGw5CvPF6GTvDCpYwIf7bEY/dZTZbgfDsHyjJwURxUJf3VQuuJj+fDIFl4+KkBVbw4Ef6jA==}
     engines: {node: '>= 12'}
+
+  '@openzeppelin/community-contracts@https://codeload.github.com/OpenZeppelin/openzeppelin-community-contracts/tar.gz/cc554fc5cfee7498dc0177beb01118e4499826f6':
+    resolution: {tarball: https://codeload.github.com/OpenZeppelin/openzeppelin-community-contracts/tar.gz/cc554fc5cfee7498dc0177beb01118e4499826f6}
+    version: 0.0.1
+
+  '@openzeppelin/contracts@5.3.0-rc.0':
+    resolution: {integrity: sha512-SEkkTWf+Mamvc5d/i0bwL7gJcsgEFQ+go6CncVqx5UZ8Bpnp+QaGHVrKtmwUkeGMVkRfiqJKO3g7bkbF7mIC/w==}
 
   '@scure/base@1.1.9':
     resolution: {integrity: sha512-8YKhl8GHiNI/pU2VMaofa2Tor7PJRAjwQLBBuilkJ9L5+13yVbC7JO/wS7piioAvPSwR3JKM1IJ/u4xQzbcXKg==}
@@ -2098,6 +2115,8 @@ snapshots:
 
   '@adraffy/ens-normalize@1.10.1': {}
 
+  '@axelar-network/axelar-gmp-sdk-solidity@6.0.6': {}
+
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
@@ -2599,6 +2618,12 @@ snapshots:
       '@nomicfoundation/solidity-analyzer-linux-x64-gnu': 0.1.2
       '@nomicfoundation/solidity-analyzer-linux-x64-musl': 0.1.2
       '@nomicfoundation/solidity-analyzer-win32-x64-msvc': 0.1.2
+
+  '@openzeppelin/community-contracts@https://codeload.github.com/OpenZeppelin/openzeppelin-community-contracts/tar.gz/cc554fc5cfee7498dc0177beb01118e4499826f6':
+    dependencies:
+      '@axelar-network/axelar-gmp-sdk-solidity': 6.0.6
+
+  '@openzeppelin/contracts@5.3.0-rc.0': {}
 
   '@scure/base@1.1.9': {}
 

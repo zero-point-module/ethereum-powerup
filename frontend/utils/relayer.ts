@@ -65,14 +65,27 @@ export class Relayer {
     // Get current network
     const network = await this.provider.getNetwork();
 
+    // Get fee data with proper fallbacks
+    const feeData = await this.provider.getFeeData();
+    const maxFeePerGas = this.toBigIntFromHex(
+      tx.maxFeePerGas || 
+      feeData.maxFeePerGas || 
+      '0x' + (2n * 10n ** 9n).toString(16) // 2 gwei default
+    );
+    const maxPriorityFeePerGas = this.toBigIntFromHex(
+      tx.maxPriorityFeePerGas || 
+      feeData.maxPriorityFeePerGas ||
+      '0x' + (1n * 10n ** 9n).toString(16) // 1 gwei default
+    );
+
     // Format transaction for EIP-7702
     const formattedTx: TransactionRequest = {
       type: 4,
       to: tx.to,
       value: this.toBigIntFromHex(tx.value),
       gasLimit: this.toBigIntFromHex(tx.gasLimit || '0x1000000'),
-      maxFeePerGas: this.toBigIntFromHex(tx.maxFeePerGas),
-      maxPriorityFeePerGas: this.toBigIntFromHex(tx.maxPriorityFeePerGas),
+      maxFeePerGas,
+      maxPriorityFeePerGas,
       nonce,
       data: tx.data || '0x',
       // Format authorization list

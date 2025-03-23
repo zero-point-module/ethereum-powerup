@@ -13,7 +13,8 @@ import {
   hashAuthorization,
   TypedDataEncoder,
   getAddress,
-  getBigInt
+  getBigInt,
+  Signature
 } from 'ethers';
 import { useWeb3Store } from '../stores/web3Store';
 import { RelayerTransactionRequest } from './relayer';
@@ -78,12 +79,25 @@ export class EIP7702Signer extends JsonRpcSigner {
       params: [messageHash, signerAddress]
     });
 
+    // Split signature into r, s, v components
+    const sig = signature.slice(2); // remove 0x
+    const r = '0x' + sig.slice(0, 64);
+    const s = '0x' + sig.slice(64, 128);
+    const v = parseInt(sig.slice(128, 130), 16);
+
+    // Create proper Signature object
+    const canonicalSignature = Signature.from({
+      r: r.replace(/^0x0+/, '0x'),
+      s: s.replace(/^0x0+/, '0x'),
+      v
+    });
+
     // Return the authorization with signature
     return {
       address: getAddress(authRequest.address),
       nonce: getBigInt(authRequest.nonce),
       chainId: getBigInt(authRequest.chainId),
-      signature,
+      signature: canonicalSignature,
     };
   }
 
@@ -118,21 +132,42 @@ export class EIP7702Signer extends JsonRpcSigner {
 
       const network = await this.provider.getNetwork();
       
+      // Get fee data with proper fallbacks
+      const feeData = await this.provider.getFeeData();
+      const maxFeePerGas = toBeHex(
+        transaction.maxFeePerGas || 
+        feeData.maxFeePerGas || 
+        toBigInt('0x' + (2n * 10n ** 9n).toString(16)) // 2 gwei default
+      );
+      const maxPriorityFeePerGas = toBeHex(
+        transaction.maxPriorityFeePerGas || 
+        feeData.maxPriorityFeePerGas ||
+        toBigInt('0x' + (1n * 10n ** 9n).toString(16)) // 1 gwei default
+      );
+      
       // Format transaction according to EIP-7702
       const formattedTx = {
         type: 4,
         to: transaction.to ? await resolveAddress(transaction.to) : null,
-        value: toBigInt(transaction.value || 0),
-        gasLimit: toBigInt(transaction.gasLimit || '0x100000'),
-        maxFeePerGas: toBigInt(transaction.maxFeePerGas || await this.provider.getFeeData().then(f => f.maxFeePerGas || 0)),
-        maxPriorityFeePerGas: toBigInt(transaction.maxPriorityFeePerGas || await this.provider.getFeeData().then(f => f.maxPriorityFeePerGas || 0)),
+        value: toBeHex(transaction.value || 0),
+        gasLimit: toBeHex(transaction.gasLimit || '0x100000'),
+        maxFeePerGas,
+        maxPriorityFeePerGas,
         data: transaction.data || '0x',
-        authorizationList: await Promise.all(transaction.authorizationList.map(async auth => ({
-          address: await resolveAddress(auth.address),
-          nonce: toBeHex(auth.nonce || 0),
-          chainId: toBeHex(auth.chainId || network.chainId),
-          signature: typeof auth.signature === 'string' ? auth.signature : '0x',
-        }))),
+        authorizationList: await Promise.all(transaction.authorizationList.map(async auth => {
+          const address = await resolveAddress(auth.address);
+          const nonce = toBeHex(auth.nonce || 0).replace(/^0x0+/, '0x');
+          const chainId = toBeHex(auth.chainId || network.chainId).replace(/^0x0+/, '0x');
+          const signature = (typeof auth.signature === 'string' ? auth.signature : '0x')
+            .replace(/^0x0+/, '0x'); // Remove leading zeros
+
+          return {
+            address,
+            nonce,
+            chainId,
+            signature,
+          };
+        })),
       } as RelayerTransactionRequest;
 
       console.log('Formatted transaction:', formattedTx);

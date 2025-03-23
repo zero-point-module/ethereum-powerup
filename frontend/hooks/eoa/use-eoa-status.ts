@@ -15,6 +15,8 @@ export function useEOAStatus() {
       const isUpgraded = code.startsWith(EIP7702_DELEGATION_PREFIX);
       const delegatedAddress = isUpgraded ? '0x' + code.slice(EIP7702_DELEGATION_PREFIX.length) : null;
       
+      console.log('code', code);
+
       setIsUpgraded(isUpgraded);
       setDelegatedAddress(delegatedAddress);
       

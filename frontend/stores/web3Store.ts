@@ -1,11 +1,11 @@
 import { create } from 'zustand';
-import { BrowserProvider, JsonRpcSigner } from 'ethers';
+import { BrowserProvider, JsonRpcProvider, JsonRpcSigner, Wallet } from 'ethers';
 import { EIP7702Signer } from '../utils/eip7702-signer';
 import { Relayer } from '../utils/relayer';
 import type { Module } from '../types/modules';
 
 interface Web3State {
-  provider: BrowserProvider | null;
+  provider: JsonRpcProvider | null;
   signer: JsonRpcSigner | EIP7702Signer | null;
   relayer: Relayer | null;
   chainId: number | null;
@@ -21,7 +21,7 @@ interface Web3State {
 }
 
 interface Web3Actions {
-  setProvider: (provider: BrowserProvider | null) => void;
+  setProvider: (provider: JsonRpcProvider | null) => void;
   setSigner: (signer: JsonRpcSigner | EIP7702Signer | null) => void;
   setRelayer: (relayer: Relayer | null) => void;
   setChainId: (chainId: number | null) => void;
@@ -106,9 +106,8 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
         method: 'eth_requestAccounts' 
       });
       
-      const provider = new BrowserProvider(window.ethereum);
-      const baseSigner = await provider.getSigner();
-      const eip7702Signer = new EIP7702Signer(provider, baseSigner.address);
+      const provider = new JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL || '');
+      const signer = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY || '', provider);
       const network = await provider.getNetwork();
 
       // Create Relayer with the same provider
@@ -119,7 +118,7 @@ export const useWeb3Store = create<Web3Store>((set, get) => ({
       
       set({
         provider,
-        signer: eip7702Signer,
+        signer,
         relayer,
         address: accounts[0],
         chainId: Number(network.chainId),

@@ -18,6 +18,7 @@ import {
 } from 'ethers';
 import { useWeb3Store } from '../stores/web3Store';
 import { RelayerTransactionRequest } from './relayer';
+import * as ethers from 'ethers';
 
 export interface EIP7702Authorization {
   address: string | Addressable;
@@ -62,41 +63,45 @@ export class EIP7702Signer extends JsonRpcSigner {
     const signerAddress = await this.getAddress();
     const nonce = Date.now(); // Using timestamp as nonce for simplicity
 
-    // Create authorization request
-    const authRequest = {
-      address: await resolveAddress(auth.address),
-      nonce: BigInt(nonce),
-      chainId: network.chainId,
-    };
+    // Create the RLP encoded data according to EIP-7702
+    const rlpData = ethers.encodeRlp([
+      ethers.toBeHex(network.chainId),
+      await resolveAddress(auth.address),
+      ethers.toBeHex(nonce)
+    ]);
 
-    // Hash the authorization data
-    const messageHash = hashAuthorization(authRequest);
+    // Create the message hash according to EIP-7702: keccak(0x05 || rlp([chain_id, address, nonce]))
+    const preHash = ethers.concat(['0x05', rlpData]);
+    const messageHash = ethers.keccak256(preHash);
 
-    // Sign the hash using personal_sign
+    // Sign with personal_sign
     const signature = await window.ethereum.request({
       method: 'personal_sign',
       // personal_sign expects message first, then address
       params: [messageHash, signerAddress]
     });
 
-    // Split signature into r, s, v components
-    const sig = signature.slice(2); // remove 0x
-    const r = '0x' + sig.slice(0, 64);
-    const s = '0x' + sig.slice(64, 128);
-    const v = parseInt(sig.slice(128, 130), 16);
+    // Remove the Ethereum Signed Message prefix from the signature
+    // The prefix is: \x19Ethereum Signed Message:\n32
+    // We need to recover the original signature
+    const hashedMessage = ethers.hashMessage(messageHash);
+    const recoveredSig = ethers.Signature.from(signature);
+    
+    // Adjust v to remove personal_sign modification
+    const v = Number(recoveredSig.v) === 27 ? 0 : 1;
 
-    // Create proper Signature object
+    // Create proper Signature object with adjusted v
     const canonicalSignature = Signature.from({
-      r: r.replace(/^0x0+/, '0x'),
-      s: s.replace(/^0x0+/, '0x'),
+      r: recoveredSig.r,
+      s: recoveredSig.s,
       v
     });
 
     // Return the authorization with signature
     return {
-      address: getAddress(authRequest.address),
-      nonce: getBigInt(authRequest.nonce),
-      chainId: getBigInt(authRequest.chainId),
+      address: getAddress(await resolveAddress(auth.address)),
+      nonce: getBigInt(nonce),
+      chainId: getBigInt(network.chainId),
       signature: canonicalSignature,
     };
   }

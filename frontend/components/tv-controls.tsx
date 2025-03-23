@@ -38,6 +38,20 @@ export function TVControls({
   const { install, uninstall, installedModules, isInstalling, isUninstalling } =
     useModules();
 
+  const { socialRecoveryAddresses } = useWeb3Store();
+  const [socialRecoveryAddressesReady, setSocialRecoveryAddressesReady] =
+    useState(false);
+
+  useEffect(() => {
+    if (socialRecoveryAddresses.length === 2) {
+      if (socialRecoveryAddresses.every((address) => address !== '')) {
+        setSocialRecoveryAddressesReady(true);
+      }
+    } else {
+      setSocialRecoveryAddressesReady(false);
+    }
+  }, [socialRecoveryAddresses]);
+
   // Check if wallet is already upgraded
   const isUpgraded = eoaStatus?.isUpgraded || false;
 
@@ -92,7 +106,10 @@ export function TVControls({
     }
 
     try {
-      const code = await install.mutateAsync(selectedItem);
+      const code = await install.mutateAsync({
+        module: selectedItem,
+        addresses: socialRecoveryAddresses,
+      });
       const { addModule } = useWeb3Store.getState();
 
       if (code === grrrrrrrrrrrrrrr) {
@@ -263,6 +280,7 @@ export function TVControls({
         tvState={state}
         isLoading={isInstalling}
         selectedItem={selectedItem}
+        disabled={!socialRecoveryAddressesReady}
       />
     );
   }

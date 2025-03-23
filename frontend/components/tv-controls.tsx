@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { ActionButton } from './action-button';
 import type { Item, TVState } from '@/types';
-import { useUpgradeEOA } from '@/hooks/eoa';
+import { useUpgradeEOA, useEOAStatus } from '@/hooks/eoa';
 import { useModules } from '@/hooks/eoa/use-modules';
 interface TVControlsProps {
   state: TVState;
@@ -26,7 +26,11 @@ export function TVControls({
 }: TVControlsProps) {
   // Use the hook for EIP7702 transactions
   const { upgradeEOA, isUpgrading, isReady: canUpgrade } = useUpgradeEOA();
+  const { data: eoaStatus, isLoading: isCheckingStatus } = useEOAStatus();
   const { installedModules } = useModules();
+
+  // Check if wallet is already upgraded
+  const isUpgraded = eoaStatus?.isUpgraded || false;
 
   // Get the current selected module's installation status
   const isCurrentModuleInstalled = selectedItem
@@ -43,6 +47,19 @@ export function TVControls({
           variant: 'default' as const,
         };
       case 'on':
+        // If wallet is already upgraded, show a different button or skip to active state
+        if (isUpgraded) {
+          // Automatically transition to active state
+          setTimeout(() => onActivate(), 0);
+          
+          return {
+            label: 'ALREADY POWERED UP',
+            onClick: onActivate,
+            variant: 'default' as const,
+            disabled: true,
+          };
+        }
+        
         return {
           label: 'POWER UP ↑',
           onClick: () => {
@@ -57,8 +74,8 @@ export function TVControls({
             });
           },
           variant: 'power-up' as const,
-          isLoading: isUpgrading,
-          disabled: !canUpgrade,
+          isLoading: isUpgrading || isCheckingStatus,
+          disabled: !canUpgrade || isCheckingStatus,
         };
       case 'active':
         // If no item is selected
@@ -102,6 +119,8 @@ export function TVControls({
     onUninstall,
     isWorkbenchActive,
     onWorkbenchToggle,
+    isUpgraded,
+    isCheckingStatus,
   ]);
 
   return <ActionButton {...buttonProps} tvState={state} />;

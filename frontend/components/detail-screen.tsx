@@ -77,6 +77,11 @@ export function DetailScreen({
   const { socialRecoveryAddresses, setSocialRecoveryAddresses } =
     useWeb3Store();
 
+  const { installedModules } = useWeb3Store();
+  const isSocialRecoveryInstalled = installedModules.some(
+    (module) => module.id === 'social-recovery'
+  );
+
   // Handle address change
   const handleAddressChange = (index: number, value: string) => {
     const newAddresses = [...socialRecoveryAddresses];
@@ -95,9 +100,10 @@ export function DetailScreen({
       <div className="mb-6">
         <h1 className="text-xl mb-1">SOCIAL RECOVERY MODULE v1.2.4</h1>
         <div className="border-b border-[#00ff00] mb-4"></div>
-        <p className="mb-2">STATUS: AWAITING CONFIGURATION</p>
+        <p className="mb-2">STATUS: {isSocialRecoveryInstalled ? 'CONFIGURED' : 'AWAITING CONFIGURATION'}</p>
       </div>
 
+      
       <div className="mb-6">
         <p>Welcome to the Social Recovery setup wizard.</p>
         <p>This module enables wallet recovery through trusted contacts.</p>

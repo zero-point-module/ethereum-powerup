@@ -8,7 +8,11 @@ interface CopyButtonProps {
   className?: string;
 }
 
-export function CopyButton({ value, displayValue, className = '' }: CopyButtonProps) {
+export function CopyButton({
+  value,
+  displayValue,
+  className = '',
+}: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -19,7 +23,8 @@ export function CopyButton({ value, displayValue, className = '' }: CopyButtonPr
     }
   };
 
-  const displayText = displayValue || 
+  const displayText =
+    displayValue ||
     (value.length > 12 ? `${value.slice(0, 6)}...${value.slice(-4)}` : value);
 
   return (
@@ -37,4 +42,4 @@ export function CopyButton({ value, displayValue, className = '' }: CopyButtonPr
       )}
     </Button>
   );
-} 
+}

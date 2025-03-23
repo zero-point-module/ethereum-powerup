@@ -5,16 +5,14 @@ import { TVFrame } from './tv-frame';
 import { TVSidebar } from './tv-sidebar';
 import { TVMainDisplay } from './tv-main-display';
 import { useTVStore } from '@/store/tv-store';
-import { useModulesStore } from '@/store/modules-store';
 import { DEFAULT_MODULES } from '@/constants';
-
+import { useModules } from '@/hooks/eoa/use-modules';
 export default function VintageTV() {
   // Get state and actions from Zustand stores
   const { state, selectedItem, turnOn, activate, togglePower, selectItem } =
     useTVStore();
 
-  const { isModuleInstalled, installModule, uninstallModule } =
-    useModulesStore();
+  const { installedModules, install, uninstall } = useModules();
 
   const [isWorkbenchActive, setIsWorkbenchActive] = useState(false);
 
@@ -26,17 +24,23 @@ export default function VintageTV() {
 
   // Handle install action
   const handleInstall = useCallback(() => {
-    if (selectedItem && !isModuleInstalled(selectedItem.id)) {
-      installModule(selectedItem.id);
+    if (
+      selectedItem &&
+      !installedModules.some((module) => module.id === selectedItem.id)
+    ) {
+      install.mutate(selectedItem);
     }
-  }, [selectedItem, isModuleInstalled, installModule]);
+  }, [selectedItem, installedModules, install]);
 
   // Handle uninstall action
   const handleUninstall = useCallback(() => {
-    if (selectedItem && isModuleInstalled(selectedItem.id)) {
-      uninstallModule(selectedItem.id);
+    if (
+      selectedItem &&
+      installedModules.some((module) => module.id === selectedItem.id)
+    ) {
+      uninstall.mutate(selectedItem.id);
     }
-  }, [selectedItem, isModuleInstalled, uninstallModule]);
+  }, [selectedItem, installedModules, uninstall]);
 
   // Handle workbench toggle
   const toggleWorkbench = useCallback(() => {
@@ -55,7 +59,6 @@ export default function VintageTV() {
             items={DEFAULT_MODULES}
             selectedItem={selectedItem}
             isWorkbenchActive={isWorkbenchActive}
-            isModuleInstalled={isModuleInstalled}
             onSelectItem={selectItem}
             onTurnOn={turnOn}
             onActivate={activate}

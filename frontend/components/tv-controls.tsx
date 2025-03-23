@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { ActionButton } from './action-button';
 import type { Item, TVState } from '@/types';
-
+import { useUpgradeEOA } from '@/hooks/eoa';
+import { useModules } from '@/hooks/eoa/use-modules';
 interface TVControlsProps {
   state: TVState;
   selectedItem: Item | null;
   isWorkbenchActive: boolean;
-  isModuleInstalled: (moduleId: number) => boolean;
   onTurnOn: () => void;
   onActivate: () => void;
   onInstall: () => void;
@@ -18,16 +18,19 @@ export function TVControls({
   state,
   selectedItem,
   isWorkbenchActive,
-  isModuleInstalled,
   onTurnOn,
   onActivate,
   onInstall,
   onUninstall,
   onWorkbenchToggle,
 }: TVControlsProps) {
+  // Use the hook for EIP7702 transactions
+  const { upgradeEOA, isUpgrading, isReady: canUpgrade } = useUpgradeEOA();
+  const { installedModules } = useModules();
+
   // Get the current selected module's installation status
   const isCurrentModuleInstalled = selectedItem
-    ? isModuleInstalled(selectedItem.id)
+    ? installedModules.some((module) => module.id === selectedItem.id)
     : false;
 
   // Determine which button to show based on state and module installation status
@@ -42,8 +45,20 @@ export function TVControls({
       case 'on':
         return {
           label: 'POWER UP ↑',
-          onClick: onActivate,
+          onClick: () => {
+            // First update the UI state
+            onActivate();
+
+            // Call the mutate function correctly
+            // The empty object is passed to match the mutate function's expected parameters
+            upgradeEOA(undefined, {
+              onSuccess: () => console.log('Upgrade completed successfully'),
+              onError: (error) => console.error('Upgrade failed:', error),
+            });
+          },
           variant: 'power-up' as const,
+          isLoading: isUpgrading,
+          disabled: !canUpgrade,
         };
       case 'active':
         // If no item is selected
@@ -80,6 +95,9 @@ export function TVControls({
     isCurrentModuleInstalled,
     onTurnOn,
     onActivate,
+    upgradeEOA,
+    isUpgrading,
+    canUpgrade,
     onInstall,
     onUninstall,
     isWorkbenchActive,

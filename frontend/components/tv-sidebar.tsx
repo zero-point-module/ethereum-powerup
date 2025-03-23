@@ -8,7 +8,6 @@ interface TVSidebarProps {
   items: Item[];
   selectedItem: Item | null;
   isWorkbenchActive: boolean;
-  isModuleInstalled: (moduleId: number) => boolean;
   onSelectItem: (item: Item) => void;
   onTurnOn: () => void;
   onActivate: () => void;
@@ -22,7 +21,6 @@ export function TVSidebar({
   items,
   selectedItem,
   isWorkbenchActive,
-  isModuleInstalled,
   onSelectItem,
   onTurnOn,
   onActivate,
@@ -45,7 +43,6 @@ export function TVSidebar({
         state={state}
         selectedItem={selectedItem}
         isWorkbenchActive={isWorkbenchActive}
-        isModuleInstalled={isModuleInstalled}
         onTurnOn={onTurnOn}
         onActivate={onActivate}
         onInstall={onInstall}

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ethers } from 'ethers';
-import { useWeb3Store } from '../../stores/web3Store';
+import { useWeb3Store } from '../../store/web3Store';
 import { SMART_WALLET_ABI } from '../../constants/SmartWalletABI';
 
 export function useSmartWallet() {
@@ -31,20 +31,20 @@ export function useSmartWallet() {
       if (!signer || !delegatedAddress) {
         throw new Error('Smart wallet not available');
       }
-      
+
       const smartWallet = new ethers.Contract(
         delegatedAddress,
         SMART_WALLET_ABI,
         signer
       );
-      
+
       const tx = await smartWallet.setNumber(newNumber);
       await tx.wait();
       return tx;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ 
-        queryKey: ['smartWalletNumber', delegatedAddress] 
+      queryClient.invalidateQueries({
+        queryKey: ['smartWalletNumber', delegatedAddress],
       });
     },
   });
@@ -57,4 +57,4 @@ export function useSmartWallet() {
     isSettingNumber: setNumber.isPending,
     isReady: !!signer && !!delegatedAddress,
   };
-} 
+}

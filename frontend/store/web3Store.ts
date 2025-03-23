@@ -1,91 +1,202 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { Module } from '../types/modules';
+import { JsonRpcProvider, JsonRpcSigner, Wallet } from 'ethers';
+import type { Item } from '../types/index';
 
 interface Web3State {
-  // Connection state
-  address: string | null;
+  provider: JsonRpcProvider | null;
+  signer: JsonRpcSigner | null | Wallet;
+  relayer: Wallet | null;
   chainId: number | null;
+  address: string | null;
+  isConnected: boolean;
   isConnecting: boolean;
   error: Error | null;
-
-  // EOA state
+  // EOA upgrade status
   isUpgraded: boolean;
   delegatedAddress: string | null;
-  installedModules: Module[];
+  // Module management
+  installedModules: Item[];
 }
 
 interface Web3Actions {
-  // Connection actions
-  setAddress: (address: string | null) => void;
+  setProvider: (provider: JsonRpcProvider | null) => void;
+  setSigner: (signer: JsonRpcSigner | null | Wallet) => void;
+  setRelayer: (relayer: Wallet | null) => void;
   setChainId: (chainId: number | null) => void;
+  setAddress: (address: string | null) => void;
+  setIsConnected: (isConnected: boolean) => void;
   setIsConnecting: (isConnecting: boolean) => void;
   setError: (error: Error | null) => void;
-
-  // EOA actions
+  // EOA upgrade actions
   setIsUpgraded: (isUpgraded: boolean) => void;
   setDelegatedAddress: (address: string | null) => void;
-  setInstalledModules: (modules: Module[]) => void;
-  addModule: (module: Module) => void;
+  // Module management actions
+  addModule: (module: Item) => void;
   removeModule: (moduleId: string) => void;
-  clearModules: () => void;
-
-  // General actions
+  connect: () => Promise<void>;
+  disconnect: () => void;
+  setupEventListeners: () => () => void;
   reset: () => void;
 }
 
-type Store = Web3State & Web3Actions;
+type Web3Store = Web3State & Web3Actions;
 
-const initialState: Web3State = {
-  // Connection initial state
-  address: null,
+export const useWeb3Store = create<Web3Store>((set, get) => ({
+  // State
+  provider: null,
+  signer: null,
+  relayer: null,
   chainId: null,
+  address: null,
+  isConnected: false,
   isConnecting: false,
   error: null,
-
-  // EOA initial state
   isUpgraded: false,
   delegatedAddress: null,
   installedModules: [],
-};
 
-export const useWeb3Store = create<Store>()(
-  persist(
-    (set) => ({
-      ...initialState,
+  // Actions
+  setProvider: (provider) => set({ provider }),
+  setSigner: (signer) => set({ signer }),
+  setRelayer: (relayer) => set({ relayer }),
+  setChainId: (chainId) => set({ chainId }),
+  setAddress: (address) => set({ address }),
+  setIsConnected: (isConnected) => set({ isConnected }),
+  setIsConnecting: (isConnecting) => set({ isConnecting }),
+  setError: (error) => set({ error }),
+  setIsUpgraded: (isUpgraded) => set({ isUpgraded }),
+  setDelegatedAddress: (delegatedAddress) => set({ delegatedAddress }),
 
-      // Connection actions
-      setAddress: (address) => set({ address }),
-      setChainId: (chainId) => set({ chainId }),
-      setIsConnecting: (isConnecting) => set({ isConnecting }),
-      setError: (error) => set({ error }),
+  // Module management actions
+  addModule: (module) =>
+    set((state) => ({
+      installedModules: [...state.installedModules, module],
+    })),
+  removeModule: (moduleId) =>
+    set((state) => ({
+      installedModules: state.installedModules.filter((m) => m.id !== moduleId),
+    })),
 
-      // EOA actions
-      setIsUpgraded: (isUpgraded) => set({ isUpgraded }),
-      setDelegatedAddress: (address) => set({ delegatedAddress: address }),
-      setInstalledModules: (modules) => set({ installedModules: modules }),
-      addModule: (module) => 
-        set((state) => ({
-          installedModules: state.installedModules.some(m => m.id === module.id)
-            ? state.installedModules
-            : [...state.installedModules, module]
-        })),
-      removeModule: (moduleId) =>
-        set((state) => ({
-          installedModules: state.installedModules.filter(m => m.id !== moduleId)
-        })),
-      clearModules: () => set({ installedModules: [] }),
-
-      // General actions
-      reset: () => set(initialState),
+  reset: () =>
+    set({
+      provider: null,
+      signer: null,
+      relayer: null,
+      chainId: null,
+      address: null,
+      isConnected: false,
+      error: null,
+      isUpgraded: false,
+      delegatedAddress: null,
+      installedModules: [],
     }),
-    {
-      name: 'web3-storage',
-      partialize: (state) => ({
-        installedModules: state.installedModules,
-        isUpgraded: state.isUpgraded,
-        delegatedAddress: state.delegatedAddress,
-      }),
+
+  connect: async () => {
+    const { setIsConnecting, setError, reset } = get();
+
+    if (!window.ethereum) {
+      setError(new Error('MetaMask is not installed'));
+      return;
     }
-  )
-); 
+
+    setIsConnecting(true);
+    setError(null);
+
+    try {
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+
+      const provider = new JsonRpcProvider(
+        process.env.NEXT_PUBLIC_RPC_URL || ''
+      );
+
+      // Make sure provider is connected before creating wallet
+      await provider.getNetwork();
+
+      const signer = new Wallet(
+        process.env.NEXT_PUBLIC_PRIVATE_KEY || '',
+        provider
+      );
+      const network = await provider.getNetwork();
+
+      // Create Relayer with the same provider
+      const relayerProvider = new JsonRpcProvider(
+        window.ethereum.rpcUrls?.default?.at(0) ||
+          process.env.NEXT_PUBLIC_RPC_URL ||
+          ''
+      );
+
+      // Make sure relayer provider is connected
+      await relayerProvider.getNetwork();
+
+      const relayer = new Wallet(
+        process.env.NEXT_PUBLIC_RELAYER_PRIVATE_KEY || '',
+        relayerProvider
+      );
+
+      set({
+        provider,
+        signer,
+        relayer,
+        address: signer.address,
+        chainId: Number(network.chainId),
+        isConnected: true,
+        error: null,
+      });
+    } catch (error) {
+      reset();
+      setError(error instanceof Error ? error : new Error('Failed to connect'));
+    } finally {
+      setIsConnecting(false);
+    }
+  },
+
+  disconnect: () => {
+    get().reset();
+  },
+
+  setupEventListeners: () => {
+    const { connect, disconnect, setAddress, setChainId } = get();
+
+    if (window.ethereum) {
+      // Setup event listeners
+      window.ethereum.on('accountsChanged', (accounts: string[]) => {
+        if (accounts.length === 0) {
+          disconnect();
+        } else {
+          setAddress(accounts[0]);
+        }
+      });
+
+      window.ethereum.on('chainChanged', (newChainId: string) => {
+        setChainId(Number(newChainId));
+      });
+
+      window.ethereum.on('disconnect', () => {
+        disconnect();
+      });
+
+      // Check if already connected
+      window.ethereum
+        .request({ method: 'eth_accounts' })
+        .then((accounts: string[]) => {
+          if (accounts.length > 0) {
+            connect();
+          }
+        })
+        .catch((err: unknown) => {
+          console.error('Failed to check accounts:', err);
+        });
+    }
+
+    // Return cleanup function
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', () => {});
+        window.ethereum.removeListener('chainChanged', () => {});
+        window.ethereum.removeListener('disconnect', () => {});
+      }
+    };
+  },
+}));

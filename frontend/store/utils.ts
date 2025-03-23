@@ -4,4 +4,4 @@
  * Re-export stores for convenient imports
  */
 export { useTVStore } from './tv-store';
-export { useModulesStore } from './modules-store';
+export { useWeb3Store } from './web3Store';

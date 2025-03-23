@@ -7,9 +7,10 @@ export type ButtonVariant = 'default' | 'power-up' | 'install' | 'uninstall';
 
 // Define our list items
 export interface Item {
-  id: number;
-  title: string;
-  description?: string;
+  id: string;
+  name: string;
+  description: string;
+  contractAddress: string;
 }
 
 // Component props types
@@ -38,6 +39,7 @@ export interface ActionButtonProps {
   tvState?: TVState;
   variant?: ButtonVariant;
   isWorkbenchActive?: boolean;
+  isLoading?: boolean;
   onWorkbenchClick?: () => void;
 }
 

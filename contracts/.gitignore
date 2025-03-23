@@ -5,6 +5,14 @@ node_modules
 artifacts
 cache
 coverage
-deployments
 hardhat.config.ts
 node_modules
+
+artifacts/
+artifacts-zk/
+cache/
+cache-zk/
+coverage/
+hardhat.config.ts
+node_modules/
+
